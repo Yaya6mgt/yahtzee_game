@@ -1,0 +1,46 @@
+## Core .NET & Visual Studio build outputs
+[Bb]in/
+[Oo]bj/
+out/
+[Ll]og/
+[Ll]ogs/
+
+## Visual Studio & JetBrains Rider / VS Code cache & user settings
+.vs/
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.user
+*.userossc
+*.sln.docstates
+*.userprefs
+*.suo
+
+## Test results & Coverage reports
+[Tt]est[Rr]esult*/
+[Tt]est[Rr]esults/
+*.DotSettings.user
+coverage/
+*.coverage
+*.coveragexml
+
+## NuGet Packages
+*.nupkg
+*.snupkg
+**/packages/
+project.lock.json
+project.assets.json
+
+## Database & Local Data files
+*.db
+*.sqlite
+*.db-shm
+*.db-wal
+
+## OS generated files
+.DS_Store
+Thumbs.db
+desktop.ini

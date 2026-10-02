@@ -1,0 +1,81 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="1100" d:DesignHeight="750"
+        x:Class="Yahtzee.UI.MainWindow"
+        Title="Yahtzee Deluxe - Industrial Programming CW1"
+        Width="1150" Height="780"
+        WindowStartupLocation="CenterScreen"
+        Background="#0F172A">
+
+    <Grid RowDefinitions="Auto, *, Auto">
+        
+        <!-- Navigation Header -->
+        <Border Grid.Row="0" Background="#1E293B" Padding="16,10" BorderBrush="#334155" BorderThickness="0,0,0,1">
+            <Grid ColumnDefinitions="Auto, *, Auto">
+                
+                <!-- Logo Title -->
+                <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="10" VerticalAlignment="Center">
+                    <TextBlock Text="🎲" FontSize="22"/>
+                    <TextBlock Text="YAHTZEE DELUXE" FontSize="18" FontWeight="Black" Foreground="#6366F1" VerticalAlignment="Center"/>
+                    <Border Background="#312E81" CornerRadius="4" Padding="6,2" VerticalAlignment="Center">
+                        <TextBlock Text=".NET 10" FontSize="10" FontWeight="Bold" Foreground="#A5B4FC"/>
+                    </Border>
+                </StackPanel>
+
+                <!-- Navigation Tabs -->
+                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" Spacing="8">
+                    <Button x:Name="NavNewGameBtn" Content="🎮 New Game" Background="#312E81" Foreground="White" CornerRadius="6" Padding="12,6" Click="OnNavNewGameClicked"/>
+                    <Button x:Name="NavSaveGameBtn" Content="💾 Save Game" Background="#0F172A" Foreground="#94A3B8" CornerRadius="6" Padding="12,6" Click="OnNavSaveGameClicked"/>
+                    <Button x:Name="NavLoadGameBtn" Content="📂 Load Game" Background="#0F172A" Foreground="#94A3B8" CornerRadius="6" Padding="12,6" Click="OnNavLoadGameClicked"/>
+                    <Button x:Name="NavHighScoresBtn" Content="📊 High Scores" Background="#0F172A" Foreground="#94A3B8" CornerRadius="6" Padding="12,6" Click="OnNavHighScoresClicked"/>
+                </StackPanel>
+
+                <!-- Status & Exit Button -->
+                <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                    <Button Content="❌ Exit" Background="#991B1B" Foreground="White" CornerRadius="6" Padding="12,6" Click="OnNavExitClicked"/>
+                </StackPanel>
+
+            </Grid>
+        </Border>
+
+        <!-- Main Content Area -->
+        <ContentControl Grid.Row="1" x:Name="MainContentHost"/>
+
+        <!-- Status Bar Footer -->
+        <Border Grid.Row="2" Background="#0F172A" Padding="16,6" BorderBrush="#1E293B" BorderThickness="0,1,0,0">
+            <Grid ColumnDefinitions="*, Auto">
+                <TextBlock x:Name="StatusText" Text="Ready - F20SC Industrial Programming CW1" FontSize="11" Foreground="#64748B"/>
+                <TextBlock Grid.Column="1" Text="Yahtzee Engine v1.0" FontSize="11" Foreground="#475569"/>
+            </Grid>
+        </Border>
+
+        <!-- Save before exit Confirmation Modal -->
+        <Border Grid.Row="0" Grid.RowSpan="3"
+                x:Name="SavePromptOverlay"
+                Background="#D00F172A"
+                IsVisible="False">
+            <Border Background="#1E293B"
+                    Width="460"
+                    CornerRadius="14"
+                    Padding="24"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    BoxShadow="0 10 30 0 #A0000000">
+                <StackPanel Spacing="16">
+                    <TextBlock Text="⚠️ Unsaved Game In Progress" FontSize="20" FontWeight="Bold" Foreground="#F59E0B" HorizontalAlignment="Center"/>
+                    <TextBlock Text="You have an active game with unsaved changes. Would you like to save your game before exiting?"
+                               FontSize="13" Foreground="#CBD5E1" TextWrapping="Wrap" HorizontalAlignment="Center" TextAlignment="Center"/>
+
+                    <Grid ColumnDefinitions="*, *, *">
+                        <Button Grid.Column="0" Content="💾 Save &amp; Exit" Margin="0,0,4,0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Background="#10B981" Foreground="White" FontWeight="Bold" Click="OnPromptSaveAndExitClicked"/>
+                        <Button Grid.Column="1" Content="🚪 Don't Save" Margin="4,0,4,0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Background="#991B1B" Foreground="White" Click="OnPromptDontSaveClicked"/>
+                        <Button Grid.Column="2" Content="Cancel" Margin="4,0,0,0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Background="#334155" Foreground="White" Click="OnPromptCancelClicked"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+        </Border>
+
+    </Grid>
+</Window>

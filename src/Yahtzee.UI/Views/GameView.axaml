@@ -1,0 +1,167 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:Yahtzee.UI.Controls"
+             mc:Ignorable="d" d:DesignWidth="1100" d:DesignHeight="700"
+             x:Class="Yahtzee.UI.Views.GameView">
+
+    <Grid RowDefinitions="Auto, *">
+
+        <!-- Top Status & Action Bar -->
+        <Border Grid.Row="0" Background="#1E293B" Padding="16,12" BorderBrush="#334155" BorderThickness="0,0,0,1">
+            <Grid ColumnDefinitions="Auto, *, Auto">
+                <!-- Round Badge -->
+                <Border Grid.Column="0" Background="#312E81" CornerRadius="8" Padding="12,6">
+                    <TextBlock x:Name="RoundText" Text="ROUND 1 / 13" FontWeight="Bold" Foreground="#A5B4FC"/>
+                </Border>
+
+                <!-- Current Turn Banner -->
+                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" Spacing="12">
+                    <Border Background="#0F172A" CornerRadius="20" Padding="16,6" BorderBrush="#6366F1" BorderThickness="1">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <TextBlock x:Name="TurnIconText" Text="🎯" FontSize="16"/>
+                            <TextBlock x:Name="TurnText" Text="Alice's Turn" FontWeight="Bold" Foreground="White" FontSize="16"/>
+                        </StackPanel>
+                    </Border>
+
+                    <Border x:Name="RollsBadge" Background="#065F46" CornerRadius="16" Padding="14,6">
+                        <TextBlock x:Name="RollsText" Text="3 Rolls Remaining" FontWeight="SemiBold" Foreground="#A7F3D0"/>
+                    </Border>
+                </StackPanel>
+
+                <!-- Save Game Action Button -->
+                <Button Grid.Column="2"
+                        x:Name="SaveGameBtn"
+                        Content="💾 Save Game"
+                        Background="#334155"
+                        Foreground="White"
+                        CornerRadius="6"
+                        Padding="12,6"
+                        Click="OnSaveGameClicked"/>
+            </Grid>
+        </Border>
+
+        <!-- Main Workspace (Dice Cup + Scorecard) -->
+        <Grid Grid.Row="1" ColumnDefinitions="420, *">
+
+            <!-- Left Column: Dice Cup Area -->
+            <Border Grid.Column="0" Background="#0F172A" Padding="20" BorderBrush="#1E293B" BorderThickness="0,0,1,0">
+                <Grid RowDefinitions="Auto, *, Auto, Auto">
+                    <!-- Section Title -->
+                    <StackPanel Grid.Row="0" Spacing="4">
+                        <TextBlock Text="DICE CUP" FontSize="14" FontWeight="Bold" Foreground="#818CF8"/>
+                        <TextBlock Text="Click a die to HOLD before rolling remaining dice" FontSize="11" Foreground="#64748B"/>
+                    </StackPanel>
+
+                    <!-- 5 Dice Controls Container -->
+                    <UniformGrid Grid.Row="1" Rows="3" Columns="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <controls:DiceControl x:Name="Die0" Margin="10"/>
+                        <controls:DiceControl x:Name="Die1" Margin="10"/>
+                        <controls:DiceControl x:Name="Die2" Margin="10"/>
+                        <controls:DiceControl x:Name="Die3" Margin="10"/>
+                        <controls:DiceControl x:Name="Die4" Margin="10"/>
+                    </UniformGrid>
+
+                    <!-- AI Status Banner -->
+                    <Border Grid.Row="2"
+                            x:Name="AiStatusBanner"
+                            Background="#312E81"
+                            CornerRadius="8"
+                            Padding="12"
+                            Margin="0,0,0,12"
+                            IsVisible="False">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="8">
+                            <TextBlock Text="🤖" FontSize="18"/>
+                            <TextBlock x:Name="AiStatusText" Text="Computer is thinking..." Foreground="#C7D2FE" VerticalAlignment="Center" FontWeight="SemiBold"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Roll Action Button -->
+                    <Button Grid.Row="3"
+                            x:Name="RollBtn"
+                            Content="🎲 ROLL DICE (3 left)"
+                            HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Center"
+                            Height="54"
+                            FontSize="18"
+                            FontWeight="Black"
+                            Background="#6366F1"
+                            Foreground="White"
+                            CornerRadius="12"
+                            Click="OnRollClicked"/>
+                </Grid>
+            </Border>
+
+            <!-- Right Column: Scorecard & Score Previews -->
+            <Border Grid.Column="1" Background="#1E293B" Padding="20">
+                <Grid RowDefinitions="Auto, *, Auto">
+
+                    <!-- Player Scorecard Tabs & Header -->
+                    <Grid Grid.Row="0" ColumnDefinitions="*, Auto" Margin="0,0,0,10">
+                        <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="10" x:Name="PlayerTabsContainer"/>
+                        <TextBlock Grid.Column="1" Text="Select a category to score" FontSize="12" Foreground="#94A3B8" VerticalAlignment="Center"/>
+                    </Grid>
+
+                    <!-- Scorecard Items List -->
+                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                        <StackPanel x:Name="ScorecardRowsContainer" Spacing="6"/>
+                    </ScrollViewer>
+
+                    <!-- Scorecard Totals Footer -->
+                    <Border Grid.Row="2" Background="#0F172A" CornerRadius="10" Padding="16,12" Margin="0,10,0,0">
+                        <Grid ColumnDefinitions="*, *, *, *">
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="UPPER SUBTOTAL" FontSize="10" Foreground="#64748B" FontWeight="Bold"/>
+                                <TextBlock x:Name="UpperSubtotalText" Text="0 / 63" FontSize="16" FontWeight="Bold" Foreground="White"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Text="BONUS (+35)" FontSize="10" Foreground="#64748B" FontWeight="Bold"/>
+                                <TextBlock x:Name="UpperBonusText" Text="0" FontSize="16" FontWeight="Bold" Foreground="#10B981"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="2">
+                                <TextBlock Text="LOWER TOTAL" FontSize="10" Foreground="#64748B" FontWeight="Bold"/>
+                                <TextBlock x:Name="LowerTotalText" Text="0" FontSize="16" FontWeight="Bold" Foreground="White"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="3">
+                                <TextBlock Text="GRAND TOTAL" FontSize="10" Foreground="#F59E0B" FontWeight="Bold"/>
+                                <TextBlock x:Name="GrandTotalText" Text="0" FontSize="20" FontWeight="Black" Foreground="#F59E0B"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <!-- Game Over Modal Overlay -->
+        <Border Grid.Row="0" Grid.RowSpan="2"
+                x:Name="GameOverOverlay"
+                Background="#D00F172A"
+                IsVisible="False">
+            <Border Background="#1E293B"
+                    Width="500"
+                    CornerRadius="16"
+                    Padding="24"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    BoxShadow="0 10 30 0 #A0000000">
+                <StackPanel Spacing="16">
+                    <TextBlock Text="GAME OVER!" FontSize="26" FontWeight="Black" Foreground="#F59E0B" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="WinnerText" Text="Alice Wins with 285 Points!" FontSize="18" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center"/>
+
+                    <Border Background="#0F172A" CornerRadius="10" Padding="12">
+                        <StackPanel x:Name="FinalStandingsContainer" Spacing="8"/>
+                    </Border>
+
+                    <Grid ColumnDefinitions="*, *">
+                        <Button Grid.Column="0" Content="High Scores" Margin="0,0,6,0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Background="#334155" Foreground="White" Click="OnGameOverViewHighScoresClicked"/>
+                        <Button Grid.Column="1" Content="Play Again" Margin="6,0,0,0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Background="#10B981" Foreground="White" FontWeight="Bold" Click="OnGameOverPlayAgainClicked"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+        </Border>
+    </Grid>
+</UserControl>
