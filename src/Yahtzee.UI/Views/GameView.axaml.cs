@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Layout;
@@ -55,10 +56,10 @@ public partial class GameView : UserControl
         // Top Status
         RoundText.Text = $"ROUND {_session.CurrentRound} / {GameSession.TotalRounds}";
         TurnText.Text = $"{_session.CurrentPlayer.Name}'s Turn";
-        TurnIconText.Text = _session.CurrentPlayer.IsAi ? "🤖" : "🎯";
+        TurnIconText.Text = "";
 
         int rolls = _session.DiceCup.RollsRemaining;
-        RollsText.Text = $"🎲 {rolls} Roll{(rolls == 1 ? "" : "s")} Left";
+        RollsText.Text = $"{rolls} Roll{(rolls == 1 ? "" : "s")} Left";
         RollsBadge.Background = rolls switch
         {
             3 => Brush.Parse("#065F46"),
@@ -70,8 +71,8 @@ public partial class GameView : UserControl
         // Roll Button State
         bool canRoll = _session.DiceCup.CanRoll && !_session.CurrentPlayer.IsAi;
         RollBtn.IsEnabled = canRoll;
-        RollBtn.Content = rolls > 0 ? $"🎲 ROLL DICE ({rolls} left)" : "❌ NO ROLLS LEFT";
-        RollBtn.Background = canRoll ? Brush.Parse("#6366F1") : Brush.Parse("#475569");
+        RollBtn.Content = rolls > 0 ? $"ROLL DICE ({rolls} left)" : "NO ROLLS LEFT";
+        RollBtn.Background = canRoll ? GetThemeBrush("PrimaryBrush", "#10B981") : GetThemeBrush("BorderSubtleBrush", "#2E3138");
 
         // Dice Displays
         var dice = _session.DiceCup.Dice;
@@ -161,24 +162,30 @@ public partial class GameView : UserControl
 
             var border = new Border
             {
-                Background = isCurrent ? Brush.Parse("#312E81") : Brush.Parse("#0F172A"),
-                BorderBrush = isCurrent ? Brush.Parse("#6366F1") : Brush.Parse("#334155"),
+                Background = isCurrent ? GetThemeBrush("PrimaryContainerBrush", "#064E3B") : GetThemeBrush("WindowBgBrush", "#121214"),
+                BorderBrush = isCurrent ? GetThemeBrush("PrimaryBrush", "#10B981") : GetThemeBrush("BorderSubtleBrush", "#2E3138"),
                 BorderThickness = new Avalonia.Thickness(1),
                 CornerRadius = new Avalonia.CornerRadius(6),
                 Padding = new Avalonia.Thickness(12, 6)
             };
 
             var stack = new StackPanel { Orientation = Orientation.Horizontal, Spacing = 6 };
-            stack.Children.Add(new TextBlock
+            if (player.IsAi)
             {
-                Text = player.IsAi ? "🤖" : "👤",
-                FontSize = 14
-            });
+                stack.Children.Add(new TextBlock
+                {
+                    Text = "[AI]",
+                    FontSize = 10,
+                    FontWeight = FontWeight.Bold,
+                    Foreground = GetThemeBrush("PrimaryLightBrush", "#34D399"),
+                    VerticalAlignment = VerticalAlignment.Center
+                });
+            }
             stack.Children.Add(new TextBlock
             {
                 Text = player.Name,
                 FontWeight = isCurrent ? FontWeight.Bold : FontWeight.Normal,
-                Foreground = isCurrent ? Brushes.White : Brush.Parse("#94A3B8")
+                Foreground = isCurrent ? Brushes.White : GetThemeBrush("TextSecondaryBrush", "#A1A1AA")
             });
             stack.Children.Add(new TextBlock
             {
@@ -268,7 +275,7 @@ public partial class GameView : UserControl
             {
                 var previewBorder = new Border
                 {
-                    Background = hasRolled ? Brush.Parse("#312E81") : Brush.Parse("#0F172A"),
+                    Background = hasRolled ? GetThemeBrush("PrimaryContainerBrush", "#064E3B") : GetThemeBrush("WindowBgBrush", "#121214"),
                     CornerRadius = new Avalonia.CornerRadius(4),
                     Padding = new Avalonia.Thickness(8, 2),
                     Margin = new Avalonia.Thickness(12, 0, 8, 0),
@@ -329,7 +336,7 @@ public partial class GameView : UserControl
         var winners = _session.GetRankedPlayers();
         var winner = winners.First();
 
-        WinnerText.Text = $"🎉 {winner.Name} Wins with {winner.Scorecard.TotalScore} Points!";
+        WinnerText.Text = $"{winner.Name} Wins with {winner.Scorecard.TotalScore} Points!";
         FinalStandingsContainer.Children.Clear();
 
         for (int i = 0; i < winners.Count; i++)
@@ -343,7 +350,7 @@ public partial class GameView : UserControl
 
             var rankText = new TextBlock
             {
-                Text = i == 0 ? "🥇 1st" : (i == 1 ? "🥈 2nd" : (i == 2 ? "🥉 3rd" : $"{i + 1}th")),
+                Text = i == 0 ? "1st" : (i == 1 ? "2nd" : (i == 2 ? "3rd" : $"{i + 1}th")),
                 FontWeight = FontWeight.Bold,
                 Foreground = i == 0 ? Brush.Parse("#F59E0B") : Brushes.White,
                 Margin = new Avalonia.Thickness(0, 0, 10, 0)
@@ -392,20 +399,20 @@ public partial class GameView : UserControl
 
     private static string GetCategoryIcon(ScoreCategory c) => c switch
     {
-        ScoreCategory.Aces => "1️⃣",
-        ScoreCategory.Twos => "2️⃣",
-        ScoreCategory.Threes => "3️⃣",
-        ScoreCategory.Fours => "4️⃣",
-        ScoreCategory.Fives => "5️⃣",
-        ScoreCategory.Sixes => "6️⃣",
-        ScoreCategory.ThreeOfAKind => "☘️",
-        ScoreCategory.FourOfAKind => "🍀",
-        ScoreCategory.FullHouse => "🏠",
-        ScoreCategory.SmallStraight => "🪜",
-        ScoreCategory.LargeStraight => "🚀",
-        ScoreCategory.Yahtzee => "⭐",
-        ScoreCategory.Chance => "🎰",
-        _ => "🎲"
+        ScoreCategory.Aces => "[1]",
+        ScoreCategory.Twos => "[2]",
+        ScoreCategory.Threes => "[3]",
+        ScoreCategory.Fours => "[4]",
+        ScoreCategory.Fives => "[5]",
+        ScoreCategory.Sixes => "[6]",
+        ScoreCategory.ThreeOfAKind => "[3K]",
+        ScoreCategory.FourOfAKind => "[4K]",
+        ScoreCategory.FullHouse => "[FH]",
+        ScoreCategory.SmallStraight => "[SS]",
+        ScoreCategory.LargeStraight => "[LS]",
+        ScoreCategory.Yahtzee => "[Y!]",
+        ScoreCategory.Chance => "[?]",
+        _ => ""
     };
 
     private static string GetCategoryDisplayName(ScoreCategory c) => c switch
@@ -443,4 +450,13 @@ public partial class GameView : UserControl
         ScoreCategory.Chance => "Sum of all dice",
         _ => ""
     };
+
+    private static IBrush GetThemeBrush(string key, string fallbackHex)
+    {
+        if (Application.Current?.TryFindResource(key, out var res) == true && res is IBrush brush)
+        {
+            return brush;
+        }
+        return Brush.Parse(fallbackHex);
+    }
 }

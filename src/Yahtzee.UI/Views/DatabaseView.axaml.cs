@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Media;
@@ -46,8 +47,23 @@ public partial class DatabaseView : UserControl
 
     private void HighlightButton(Button btn, bool isActive)
     {
-        btn.Background = isActive ? Brush.Parse("#312E81") : Brush.Parse("#0F172A");
-        btn.Foreground = isActive ? Brushes.White : Brush.Parse("#94A3B8");
+        if (Application.Current?.TryFindResource(isActive ? "PrimaryContainerBrush" : "WindowBgBrush", out var bg) == true && bg is IBrush bgBrush)
+        {
+            btn.Background = bgBrush;
+        }
+        else
+        {
+            btn.Background = isActive ? Brush.Parse("#064E3B") : Brush.Parse("#121214");
+        }
+
+        if (Application.Current?.TryFindResource(isActive ? "TextPrimaryBrush" : "TextSecondaryBrush", out var fg) == true && fg is IBrush fgBrush)
+        {
+            btn.Foreground = fgBrush;
+        }
+        else
+        {
+            btn.Foreground = isActive ? Brushes.White : Brush.Parse("#A1A1AA");
+        }
     }
 
     private void OnPlayerSearchClicked(object? sender, RoutedEventArgs e)
@@ -113,7 +129,7 @@ public partial class DatabaseView : UserControl
 
             var rankText = new TextBlock
             {
-                Text = i == 0 ? "🥇 1st" : (i == 1 ? "🥈 2nd" : (i == 2 ? "🥉 3rd" : $"{i + 1}th")),
+                Text = i == 0 ? "1st" : (i == 1 ? "2nd" : (i == 2 ? "3rd" : $"{i + 1}th")),
                 FontWeight = FontWeight.Bold,
                 Foreground = i == 0 ? Brush.Parse("#F59E0B") : Brushes.White
             };
@@ -137,8 +153,8 @@ public partial class DatabaseView : UserControl
 
             var typeText = new TextBlock
             {
-                Text = r.IsAi ? "🤖 AI" : "👤 Human",
-                Foreground = Brush.Parse("#A5B4FC")
+                Text = r.IsAi ? "AI" : "Human",
+                Foreground = Brush.Parse("#A1A1AA")
             };
             Grid.SetColumn(typeText, 3);
 

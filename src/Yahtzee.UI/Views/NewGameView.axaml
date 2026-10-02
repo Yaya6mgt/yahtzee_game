@@ -5,129 +5,172 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
              x:Class="Yahtzee.UI.Views.NewGameView">
 
-    <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <Border Padding="30">
-            <StackPanel MaxWidth="650" HorizontalAlignment="Center" Spacing="24">
+    <Grid>
+        <!-- Luxury Textured Background Image -->
+        <Image Source="avares://Yahtzee.UI/Assets/background.png"
+               Stretch="UniformToFill"
+               Opacity="0.55"/>
 
-                <!-- Header Title -->
-                <StackPanel Spacing="6" HorizontalAlignment="Center">
-                    <TextBlock Text="NEW YAHTZEE GAME"
-                               FontSize="28"
-                               FontWeight="Black"
-                               Foreground="#6366F1"
-                               HorizontalAlignment="Center"/>
-                    <TextBlock Text="Configure game mode and players to begin playing"
-                               FontSize="14"
-                               Foreground="#94A3B8"
-                               HorizontalAlignment="Center"/>
-                </StackPanel>
+        <!-- Dark Dimming Gradient Overlay -->
+        <Border Background="#C5101114"/>
 
-                <!-- Game Mode Selection Cards -->
-                <Border Background="#1E293B" CornerRadius="12" Padding="20">
-                    <StackPanel Spacing="12">
-                        <TextBlock Text="CHOOSE GAME MODE"
-                                   FontSize="13"
-                                   FontWeight="Bold"
-                                   Foreground="#818CF8"/>
+        <!-- Main Content Area -->
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <Border Padding="36,40">
+                <StackPanel MaxWidth="620" HorizontalAlignment="Center" Spacing="28">
 
-                        <Grid ColumnDefinitions="*,*,*">
-                            <!-- Solo Mode Button -->
-                            <Button Grid.Column="0"
-                                    x:Name="SoloModeBtn"
-                                    Margin="0,0,6,0"
-                                    Padding="12,16"
-                                    HorizontalAlignment="Stretch"
-                                    HorizontalContentAlignment="Center"
-                                    Background="#312E81"
-                                    Foreground="White"
-                                    CornerRadius="8"
-                                    Click="OnModeSelected">
-                                <StackPanel HorizontalAlignment="Center" Spacing="4">
-                                    <TextBlock Text="Solo Game" FontWeight="Bold" HorizontalAlignment="Center"/>
-                                    <TextBlock Text="1 Player" FontSize="11" Foreground="#A5B4FC" HorizontalAlignment="Center"/>
-                                </StackPanel>
-                            </Button>
-
-                            <!-- Versus AI Button -->
-                            <Button Grid.Column="1"
-                                    x:Name="VsAiBtn"
-                                    Margin="6,0,6,0"
-                                    Padding="12,16"
-                                    HorizontalAlignment="Stretch"
-                                    HorizontalContentAlignment="Center"
-                                    Background="#1E293B"
-                                    BorderBrush="#475569"
-                                    BorderThickness="1"
-                                    Foreground="White"
-                                    CornerRadius="8"
-                                    Click="OnModeSelected">
-                                <StackPanel HorizontalAlignment="Center" Spacing="4">
-                                    <TextBlock Text="vs Computer" FontWeight="Bold" HorizontalAlignment="Center"/>
-                                    <TextBlock Text="Human vs AI" FontSize="11" Foreground="#94A3B8" HorizontalAlignment="Center"/>
-                                </StackPanel>
-                            </Button>
-
-                            <!-- Hotseat Multiplayer Button -->
-                            <Button Grid.Column="2"
-                                    x:Name="HotseatBtn"
-                                    Margin="6,0,0,0"
-                                    Padding="12,16"
-                                    HorizontalAlignment="Stretch"
-                                    HorizontalContentAlignment="Center"
-                                    Background="#1E293B"
-                                    BorderBrush="#475569"
-                                    BorderThickness="1"
-                                    Foreground="White"
-                                    CornerRadius="8"
-                                    Click="OnModeSelected">
-                                <StackPanel HorizontalAlignment="Center" Spacing="4">
-                                    <TextBlock Text="Hotseat Multi" FontWeight="Bold" HorizontalAlignment="Center"/>
-                                    <TextBlock Text="2-4 Players" FontSize="11" Foreground="#94A3B8" HorizontalAlignment="Center"/>
-                                </StackPanel>
-                            </Button>
-                        </Grid>
-                    </StackPanel>
-                </Border>
-
-                <!-- Player Configuration Section -->
-                <Border Background="#1E293B" CornerRadius="12" Padding="20">
-                    <StackPanel Spacing="16">
-                        <Grid ColumnDefinitions="*, Auto">
-                            <TextBlock Grid.Column="0"
-                                       Text="PLAYER CONFIGURATION"
-                                       FontSize="13"
+                    <!-- Luxury Header Section -->
+                    <StackPanel Spacing="6" HorizontalAlignment="Center">
+                        <Border Background="{DynamicResource GoldContainerBrush}"
+                                BorderBrush="{DynamicResource GoldLuxuryBrush}"
+                                BorderThickness="1"
+                                CornerRadius="2"
+                                Padding="12,3"
+                                HorizontalAlignment="Center"
+                                Margin="0,0,0,4">
+                            <TextBlock Text="YAHTZEE DELUXE EDITION"
+                                       FontSize="10"
                                        FontWeight="Bold"
-                                       Foreground="#818CF8"
-                                       VerticalAlignment="Center"/>
-                            <Button Grid.Column="1"
-                                    x:Name="AddPlayerBtn"
-                                    Content="+ Add Player"
-                                    Background="#4F46E5"
-                                    Foreground="White"
-                                    Padding="12,6"
-                                    CornerRadius="6"
-                                    Click="OnAddPlayerClicked"
-                                    IsVisible="False"/>
-                        </Grid>
+                                       Foreground="{DynamicResource GoldLuxuryBrush}"
+                                       LetterSpacing="2"/>
+                        </Border>
 
-                        <StackPanel x:Name="PlayerRowsContainer" Spacing="10"/>
+                        <TextBlock Text="NEW GAME SETUP"
+                                   FontSize="26"
+                                   FontWeight="Black"
+                                   Foreground="White"
+                                   HorizontalAlignment="Center"
+                                   LetterSpacing="1"/>
+
+                        <TextBlock Text="Configure your game mode and players to begin playing"
+                                   FontSize="13"
+                                   Foreground="{DynamicResource TextSecondaryBrush}"
+                                   HorizontalAlignment="Center"/>
                     </StackPanel>
-                </Border>
 
-                <!-- Start Game Action Button -->
-                <Button x:Name="StartGameBtn"
-                        Content="START GAME"
-                        HorizontalAlignment="Stretch"
-                        HorizontalContentAlignment="Center"
-                        Height="50"
-                        FontSize="16"
-                        FontWeight="Bold"
-                        Background="#10B981"
-                        Foreground="White"
-                        CornerRadius="10"
-                        Click="OnStartGameClicked"/>
+                    <!-- Game Mode Selection Cards -->
+                    <Border Background="{DynamicResource GlassBgBrush}"
+                            BorderBrush="{DynamicResource GoldBorderBrush}"
+                            BorderThickness="1"
+                            CornerRadius="6"
+                            Padding="24"
+                            BoxShadow="0 15 35 0 #B0000000">
+                        <StackPanel Spacing="16">
+                            <TextBlock Text="CHOOSE GAME MODE"
+                                       FontSize="11"
+                                       FontWeight="Bold"
+                                       Foreground="{DynamicResource GoldLuxuryBrush}"
+                                       LetterSpacing="1.5"/>
 
-            </StackPanel>
-        </Border>
-    </ScrollViewer>
+                            <Grid ColumnDefinitions="*,*,*">
+                                <!-- Solo Mode Button -->
+                                <Button Grid.Column="0"
+                                        x:Name="SoloModeBtn"
+                                        Margin="0,0,6,0"
+                                        Padding="14,18"
+                                        HorizontalAlignment="Stretch"
+                                        HorizontalContentAlignment="Center"
+                                        Background="{DynamicResource PrimaryContainerBrush}"
+                                        BorderBrush="{DynamicResource PrimaryBrush}"
+                                        BorderThickness="1"
+                                        Foreground="White"
+                                        CornerRadius="4"
+                                        Click="OnModeSelected">
+                                    <StackPanel HorizontalAlignment="Center" Spacing="4">
+                                        <TextBlock Text="Solo Game" FontWeight="Bold" FontSize="14" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="1 Player" FontSize="11" Foreground="{DynamicResource PrimaryLightBrush}" HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
+
+                                <!-- Versus AI Button -->
+                                <Button Grid.Column="1"
+                                        x:Name="VsAiBtn"
+                                        Margin="6,0,6,0"
+                                        Padding="14,18"
+                                        HorizontalAlignment="Stretch"
+                                        HorizontalContentAlignment="Center"
+                                        Background="{DynamicResource InputBgBrush}"
+                                        BorderBrush="{DynamicResource BorderSubtleBrush}"
+                                        BorderThickness="1"
+                                        Foreground="White"
+                                        CornerRadius="4"
+                                        Click="OnModeSelected">
+                                    <StackPanel HorizontalAlignment="Center" Spacing="4">
+                                        <TextBlock Text="vs Computer" FontWeight="Bold" FontSize="14" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="Human vs AI" FontSize="11" Foreground="{DynamicResource TextMutedBrush}" HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
+
+                                <!-- Hotseat Multiplayer Button -->
+                                <Button Grid.Column="2"
+                                        x:Name="HotseatBtn"
+                                        Margin="6,0,0,0"
+                                        Padding="14,18"
+                                        HorizontalAlignment="Stretch"
+                                        HorizontalContentAlignment="Center"
+                                        Background="{DynamicResource InputBgBrush}"
+                                        BorderBrush="{DynamicResource BorderSubtleBrush}"
+                                        BorderThickness="1"
+                                        Foreground="White"
+                                        CornerRadius="4"
+                                        Click="OnModeSelected">
+                                    <StackPanel HorizontalAlignment="Center" Spacing="4">
+                                        <TextBlock Text="Hotseat Multi" FontWeight="Bold" FontSize="14" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="2-4 Players" FontSize="11" Foreground="{DynamicResource TextMutedBrush}" HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Player Configuration Section -->
+                    <Border Background="{DynamicResource GlassBgBrush}"
+                            BorderBrush="{DynamicResource GoldBorderBrush}"
+                            BorderThickness="1"
+                            CornerRadius="6"
+                            Padding="24"
+                            BoxShadow="0 15 35 0 #B0000000">
+                        <StackPanel Spacing="16">
+                            <Grid ColumnDefinitions="*, Auto">
+                                <TextBlock Grid.Column="0"
+                                           Text="PLAYER CONFIGURATION"
+                                           FontSize="11"
+                                           FontWeight="Bold"
+                                           Foreground="{DynamicResource GoldLuxuryBrush}"
+                                           LetterSpacing="1.5"
+                                           VerticalAlignment="Center"/>
+                                <Button Grid.Column="1"
+                                        x:Name="AddPlayerBtn"
+                                        Content="+ Add Player"
+                                        Background="{DynamicResource PrimaryBrush}"
+                                        Foreground="White"
+                                        Padding="14,6"
+                                        CornerRadius="4"
+                                        FontWeight="SemiBold"
+                                        Click="OnAddPlayerClicked"
+                                        IsVisible="False"/>
+                            </Grid>
+
+                            <StackPanel x:Name="PlayerRowsContainer" Spacing="12"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Start Game Action Button -->
+                    <Button x:Name="StartGameBtn"
+                            Content="START GAME"
+                            HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Center"
+                            Height="54"
+                            FontSize="16"
+                            FontWeight="Black"
+                            LetterSpacing="1.5"
+                            Background="{DynamicResource PrimaryBrush}"
+                            Foreground="White"
+                            CornerRadius="4"
+                            Click="OnStartGameClicked"/>
+
+                </StackPanel>
+            </Border>
+        </ScrollViewer>
+    </Grid>
 </UserControl>

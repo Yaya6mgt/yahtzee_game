@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Media;
@@ -182,14 +183,36 @@ public partial class MainWindow : Window
         return false;
     }
 
-    private void HighlightNav(Button btn)
+    private void HighlightNav(Button activeBtn)
     {
-        NavNewGameBtn.Background = Brush.Parse("#0F172A");
-        NavSaveGameBtn.Background = Brush.Parse("#0F172A");
-        NavLoadGameBtn.Background = Brush.Parse("#0F172A");
-        NavHighScoresBtn.Background = Brush.Parse("#0F172A");
+        IBrush activeBg = TryGetResourceBrush("PrimaryContainerBrush", "#064E3B");
+        IBrush inactiveBg = TryGetResourceBrush("HeaderBgBrush", "#1B1C20");
+        IBrush activeFg = TryGetResourceBrush("TextPrimaryBrush", "#F4F4F5");
+        IBrush inactiveFg = TryGetResourceBrush("TextSecondaryBrush", "#A1A1AA");
 
-        btn.Background = Brush.Parse("#312E81");
+        NavNewGameBtn.Background = inactiveBg;
+        NavNewGameBtn.Foreground = inactiveFg;
+
+        NavSaveGameBtn.Background = inactiveBg;
+        NavSaveGameBtn.Foreground = inactiveFg;
+
+        NavLoadGameBtn.Background = inactiveBg;
+        NavLoadGameBtn.Foreground = inactiveFg;
+
+        NavHighScoresBtn.Background = inactiveBg;
+        NavHighScoresBtn.Foreground = inactiveFg;
+
+        activeBtn.Background = activeBg;
+        activeBtn.Foreground = activeFg;
+    }
+
+    private static IBrush TryGetResourceBrush(string resourceKey, string fallbackHex)
+    {
+        if (Application.Current?.TryFindResource(resourceKey, out var res) == true && res is IBrush brush)
+        {
+            return brush;
+        }
+        return Brush.Parse(fallbackHex);
     }
 
     private void OnNavNewGameClicked(object? sender, RoutedEventArgs e) => ShowNewGameScreen();

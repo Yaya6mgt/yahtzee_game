@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Layout;
@@ -39,7 +40,6 @@ public partial class NewGameView : UserControl
     {
         _currentMode = mode;
 
-        // Reset mode buttons styling
         HighlightButton(SoloModeBtn, mode == SelectedGameMode.Solo);
         HighlightButton(VsAiBtn, mode == SelectedGameMode.VsAi);
         HighlightButton(HotseatBtn, mode == SelectedGameMode.Hotseat);
@@ -69,8 +69,23 @@ public partial class NewGameView : UserControl
 
     private void HighlightButton(Button btn, bool isSelected)
     {
-        btn.Background = isSelected ? Brush.Parse("#312E81") : Brush.Parse("#1E293B");
-        btn.BorderBrush = isSelected ? Brush.Parse("#6366F1") : Brush.Parse("#475569");
+        if (Application.Current?.TryFindResource(isSelected ? "PrimaryContainerBrush" : "InputBgBrush", out var bg) == true && bg is IBrush bgBrush)
+        {
+            btn.Background = bgBrush;
+        }
+        else
+        {
+            btn.Background = isSelected ? Brush.Parse("#064E3B") : Brush.Parse("#18191D");
+        }
+
+        if (Application.Current?.TryFindResource(isSelected ? "PrimaryBrush" : "BorderSubtleBrush", out var border) == true && border is IBrush borderBrush)
+        {
+            btn.BorderBrush = borderBrush;
+        }
+        else
+        {
+            btn.BorderBrush = isSelected ? Brush.Parse("#10B981") : Brush.Parse("#2E3138");
+        }
     }
 
     private void AddPlayerRow(string defaultName, bool isAi, string defaultStrategy = "Basic")
@@ -85,8 +100,10 @@ public partial class NewGameView : UserControl
 
         var iconText = new TextBlock
         {
-            Text = isAi ? "🤖" : "👤",
-            FontSize = 18,
+            Text = isAi ? "AI" : "",
+            FontSize = 12,
+            FontWeight = FontWeight.Bold,
+            Foreground = Brush.Parse("#10B981"),
             VerticalAlignment = VerticalAlignment.Center,
             Margin = new Avalonia.Thickness(0, 0, 10, 0)
         };
@@ -123,12 +140,12 @@ public partial class NewGameView : UserControl
         aiCheck.IsCheckedChanged += (s, e) =>
         {
             strategyCombo.IsVisible = aiCheck.IsChecked == true;
-            iconText.Text = aiCheck.IsChecked == true ? "🤖" : "👤";
+            iconText.Text = aiCheck.IsChecked == true ? "AI" : "";
         };
 
         var removeBtn = new Button
         {
-            Content = "❌",
+            Content = "Remove",
             Background = Brushes.Transparent,
             Foreground = Brush.Parse("#EF4444"),
             Margin = new Avalonia.Thickness(6, 0, 0, 0),

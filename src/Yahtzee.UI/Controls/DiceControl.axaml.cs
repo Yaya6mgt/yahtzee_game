@@ -31,6 +31,11 @@ public partial class DiceControl : UserControl
     public DiceControl()
     {
         InitializeComponent();
+        Loaded += (s, e) =>
+        {
+            UpdatePipsDisplay(Value);
+            UpdateHeldState(IsHeld);
+        };
     }
 
     protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
@@ -49,7 +54,7 @@ public partial class DiceControl : UserControl
 
     private void UpdatePipsDisplay(int val)
     {
-        if (Pip00 == null) return; // Not initialized yet
+        if (Pip00 == null) return;
 
         Pip00.IsVisible = val is 4 or 5 or 6;
         Pip02.IsVisible = val is 2 or 3 or 4 or 5 or 6;
@@ -69,13 +74,13 @@ public partial class DiceControl : UserControl
         HeldBadge.IsVisible = isHeld;
         if (isHeld)
         {
-            DieCard.Background = Brush.Parse("#FEF3C7"); // Warm gold tint
-            DieCard.BorderBrush = Brush.Parse("#F59E0B"); // Gold border
+            DieCard.Background = Brush.Parse("#FEF3C7");
+            DieCard.BorderBrush = Brush.Parse("#F59E0B");
         }
         else
         {
-            DieCard.Background = Brush.Parse("#F8FAFC"); // Clean ivory
-            DieCard.BorderBrush = Brush.Parse("#94A3B8"); // Slate border
+            DieCard.Background = Brush.Parse("#F8FAFC");
+            DieCard.BorderBrush = Brush.Parse("#94A3B8");
         }
     }
 

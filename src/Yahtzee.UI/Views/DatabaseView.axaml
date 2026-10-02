@@ -8,50 +8,50 @@
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <Border Padding="24">
             <StackPanel Spacing="20" MaxWidth="800" HorizontalAlignment="Center">
-                
+
                 <!-- Title Header -->
                 <StackPanel Spacing="4" HorizontalAlignment="Center">
                     <TextBlock Text="GAMES DATABASE &amp; LEADERBOARD"
                                FontSize="26"
                                FontWeight="Black"
-                               Foreground="#F59E0B"
+                               Foreground="{DynamicResource GoldBrush}"
                                HorizontalAlignment="Center"/>
                     <TextBlock Text="High scores and historical match records stored in SQLite"
                                FontSize="13"
-                               Foreground="#94A3B8"
+                               Foreground="{DynamicResource TextSecondaryBrush}"
                                HorizontalAlignment="Center"/>
                 </StackPanel>
 
                 <!-- Filter Controls Bar -->
-                <Border Background="#1E293B" CornerRadius="10" Padding="16">
+                <Border Background="{DynamicResource CardBgBrush}" CornerRadius="10" Padding="16">
                     <Grid ColumnDefinitions="*, Auto">
                         <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="8">
-                            <Button x:Name="TopOverallBtn" Content="Top 5 Overall" Background="#312E81" Foreground="White" CornerRadius="6" Click="OnFilterTabClicked"/>
-                            <Button x:Name="TopByPlayerBtn" Content="Top 5 By Player" Background="#0F172A" Foreground="#94A3B8" CornerRadius="6" Click="OnFilterTabClicked"/>
-                            <Button x:Name="RecentHistoryBtn" Content="Match History" Background="#0F172A" Foreground="#94A3B8" CornerRadius="6" Click="OnFilterTabClicked"/>
+                            <Button x:Name="TopOverallBtn" Content="Top 5 Overall" Background="{DynamicResource PrimaryContainerBrush}" Foreground="White" CornerRadius="6" Click="OnFilterTabClicked"/>
+                            <Button x:Name="TopByPlayerBtn" Content="Top 5 By Player" Background="{DynamicResource WindowBgBrush}" Foreground="{DynamicResource TextSecondaryBrush}" CornerRadius="6" Click="OnFilterTabClicked"/>
+                            <Button x:Name="RecentHistoryBtn" Content="Match History" Background="{DynamicResource WindowBgBrush}" Foreground="{DynamicResource TextSecondaryBrush}" CornerRadius="6" Click="OnFilterTabClicked"/>
                         </StackPanel>
 
                         <!-- Search Player Input (Visible on By Player tab) -->
                         <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="6" x:Name="PlayerSearchContainer" IsVisible="False">
                             <TextBox x:Name="PlayerSearchInput" PlaceholderText="Enter player name..." Width="180"/>
-                            <Button Content="🔍 Search" Background="#6366F1" Foreground="White" Click="OnPlayerSearchClicked"/>
+                            <Button Content="Search" Background="{DynamicResource PrimaryBrush}" Foreground="White" Click="OnPlayerSearchClicked"/>
                         </StackPanel>
                     </Grid>
                 </Border>
 
                 <!-- Leaderboard Table Container -->
-                <Border Background="#1E293B" CornerRadius="10" Padding="16">
+                <Border Background="{DynamicResource CardBgBrush}" CornerRadius="10" Padding="16">
                     <StackPanel Spacing="10">
                         <!-- Table Header -->
                         <Grid ColumnDefinitions="60, *, 120, 100, 160" Margin="8,0,8,6">
-                            <TextBlock Grid.Column="0" Text="RANK" FontSize="11" FontWeight="Bold" Foreground="#64748B"/>
-                            <TextBlock Grid.Column="1" Text="PLAYER NAME" FontSize="11" FontWeight="Bold" Foreground="#64748B"/>
-                            <TextBlock Grid.Column="2" Text="SCORE" FontSize="11" FontWeight="Bold" Foreground="#64748B"/>
-                            <TextBlock Grid.Column="3" Text="TYPE" FontSize="11" FontWeight="Bold" Foreground="#64748B"/>
-                            <TextBlock Grid.Column="4" Text="DATE PLAYED" FontSize="11" FontWeight="Bold" Foreground="#64748B"/>
+                            <TextBlock Grid.Column="0" Text="RANK" FontSize="11" FontWeight="Bold" Foreground="{DynamicResource TextMutedBrush}"/>
+                            <TextBlock Grid.Column="1" Text="PLAYER NAME" FontSize="11" FontWeight="Bold" Foreground="{DynamicResource TextMutedBrush}"/>
+                            <TextBlock Grid.Column="2" Text="SCORE" FontSize="11" FontWeight="Bold" Foreground="{DynamicResource TextMutedBrush}"/>
+                            <TextBlock Grid.Column="3" Text="TYPE" FontSize="11" FontWeight="Bold" Foreground="{DynamicResource TextMutedBrush}"/>
+                            <TextBlock Grid.Column="4" Text="DATE PLAYED" FontSize="11" FontWeight="Bold" Foreground="{DynamicResource TextMutedBrush}"/>
                         </Grid>
 
-                        <Separator Background="#334155" Height="1"/>
+                        <Separator Background="{DynamicResource BorderSubtleBrush}" Height="1"/>
 
                         <!-- Data Rows List -->
                         <StackPanel x:Name="LeaderboardRowsContainer" Spacing="6"/>
@@ -59,7 +59,7 @@
                         <!-- Empty State Message -->
                         <TextBlock x:Name="EmptyStateText"
                                    Text="No game records found in SQLite database yet."
-                                   Foreground="#64748B"
+                                   Foreground="{DynamicResource TextMutedBrush}"
                                    FontStyle="Italic"
                                    HorizontalAlignment="Center"
                                    Margin="0,20"
