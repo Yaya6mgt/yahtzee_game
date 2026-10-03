@@ -3,46 +3,50 @@
 
     <!-- ================================================================= -->
     <!-- YAHTZEE DELUXE DESIGN SYSTEM - EMERALD & CHARCOAL PALETTE         -->
-    <!-- (theme: Obsidian, Emerald Green, Warm Gold & Crimson)     -->
+    <!-- (theme: White cream, Emerald Green, Warm Gold & Crimson)     -->
     <!-- ================================================================= -->
 
-    <!-- Base Colors -->
-    <Color x:Key="WindowBgColor">#121214</Color>
-    <Color x:Key="HeaderBgColor">#1B1C20</Color>
-    <Color x:Key="CardBgColor">#23252B</Color>
-    <Color x:Key="CardBgHoverColor">#2D3038</Color>
-    <Color x:Key="InputBgColor">#18191D</Color>
+<!-- Base Colors (Warm Ivory & Sand) -->
+    <Color x:Key="WindowBgColor">#FAF8F5</Color>
+    <Color x:Key="HeaderBgColor">#F6EFE0</Color>
+    <Color x:Key="CardBgColor">#FFFFFF</Color>
+    <Color x:Key="CardBgHoverColor">#E8E4DC</Color>
+    <Color x:Key="InputBgColor">#71C0A3</Color>
+    <Color x:Key="CasinoFeltColor">#0D261E</Color>
+    <Color x:Key="CasinoDarkFeltColor">#061813</Color>
 
-    <!-- Primary Accent (Emerald Green) -->
+    <!-- Primary Accent (Emerald Green & Jade) -->
     <Color x:Key="PrimaryColor">#10B981</Color>
     <Color x:Key="PrimaryHoverColor">#059669</Color>
     <Color x:Key="PrimaryLightColor">#34D399</Color>
     <Color x:Key="PrimaryContainerColor">#064E3B</Color>
 
-    <!-- Secondary Accent (Warm Gold / Amber) -->
+    <!-- Secondary Accent (Royal Metallic Gold & Champagne) -->
     <Color x:Key="GoldColor">#F59E0B</Color>
     <Color x:Key="GoldHoverColor">#D97706</Color>
     <Color x:Key="GoldLightColor">#FBBF24</Color>
     <Color x:Key="GoldContainerColor">#451A03</Color>
 
-    <!-- Danger Accent (Crimson Rose) -->
-    <Color x:Key="RoseColor">#E11D48</Color>
-    <Color x:Key="RoseHoverColor">#BE123C</Color>
-    <Color x:Key="RoseContainerColor">#4C0519</Color>
+    <!-- Creative Matching Accent (Deep Royal Velvet Crimson & Rose) -->
+    <Color x:Key="RoseColor">#BE123C</Color>
+    <Color x:Key="RoseHoverColor">#9F1239</Color>
+    <Color x:Key="RoseContainerColor">#3F0E18</Color>
+    <Color x:Key="WineAccentColor">#8B152B</Color>
 
     <!-- Text Colors -->
-    <Color x:Key="TextPrimaryColor">#F4F4F5</Color>
-    <Color x:Key="TextSecondaryColor">#A1A1AA</Color>
-    <Color x:Key="TextMutedColor">#71717A</Color>
-    <Color x:Key="TextDarkColor">#18181B</Color>
+    <Color x:Key="TextPrimaryColor">#F8FAFC</Color>
+    <Color x:Key="TextSecondaryColor">#2F5C4D</Color>
+    <Color x:Key="TextMutedColor">#A7CEC0</Color>
+    <Color x:Key="TextDarkColor">#0C150C</Color>
 
-    <!-- Luxury Accents (Gold Metallic & Silver) -->
+    <!-- Luxury Accents (Gold Metallic & Platinum) -->
     <Color x:Key="GoldLuxuryColor">#D4AF37</Color>
+    <Color x:Key="GoldBrightColor">#FFD700</Color>
     <Color x:Key="SilverColor">#E2E8F0</Color>
 
-    <!-- Borders -->
-    <Color x:Key="BorderSubtleColor">#2E3138</Color>
-    <Color x:Key="BorderHighlightColor">#3F434D</Color>
+    <!-- Borders (Warm Gold & Charcoal Borders) -->
+    <Color x:Key="BorderSubtleColor">#243325</Color>
+    <Color x:Key="BorderHighlightColor">#374A36</Color>
 
     <!-- ================================================================= -->
     <!-- SOLID COLOR BRUSHES                                              -->
@@ -54,7 +58,9 @@
     <SolidColorBrush x:Key="CardBgBrush" Color="{StaticResource CardBgColor}"/>
     <SolidColorBrush x:Key="CardBgHoverBrush" Color="{StaticResource CardBgHoverColor}"/>
     <SolidColorBrush x:Key="InputBgBrush" Color="{StaticResource InputBgColor}"/>
-    <SolidColorBrush x:Key="GlassBgBrush" Color="#EE1B1C20"/>
+    <SolidColorBrush x:Key="GlassBgBrush" Color="#00000000"/>
+    <SolidColorBrush x:Key="CasinoFeltBrush" Color="{StaticResource CasinoFeltColor}"/>
+    <SolidColorBrush x:Key="CasinoDarkFeltBrush" Color="{StaticResource CasinoDarkFeltColor}"/>
 
     <!-- Primary Accent Brushes -->
     <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource PrimaryColor}"/>
@@ -68,15 +74,15 @@
     <SolidColorBrush x:Key="GoldLightBrush" Color="{StaticResource GoldLightColor}"/>
     <SolidColorBrush x:Key="GoldContainerBrush" Color="{StaticResource GoldContainerColor}"/>
     <SolidColorBrush x:Key="GoldLuxuryBrush" Color="{StaticResource GoldLuxuryColor}"/>
-    <SolidColorBrush x:Key="GoldBorderBrush" Color="#66D4AF37"/>
+    <SolidColorBrush x:Key="GoldBrightBrush" Color="{StaticResource GoldBrightColor}"/>
+    <SolidColorBrush x:Key="GoldBorderBrush" Color="#80D4AF37"/>
+    <SolidColorBrush x:Key="GoldGlowBrush" Color="#33D4AF37"/>
 
-    <!-- Silver Brushes -->
-    <SolidColorBrush x:Key="SilverBrush" Color="{StaticResource SilverColor}"/>
-
-    <!-- Danger Brushes -->
+    <!-- Royal Crimson & Wine Brushes -->
     <SolidColorBrush x:Key="RoseBrush" Color="{StaticResource RoseColor}"/>
     <SolidColorBrush x:Key="RoseHoverBrush" Color="{StaticResource RoseHoverColor}"/>
     <SolidColorBrush x:Key="RoseContainerBrush" Color="{StaticResource RoseContainerColor}"/>
+    <SolidColorBrush x:Key="WineAccentBrush" Color="{StaticResource WineAccentColor}"/>
 
     <!-- Text Brushes -->
     <SolidColorBrush x:Key="TextPrimaryBrush" Color="{StaticResource TextPrimaryColor}"/>

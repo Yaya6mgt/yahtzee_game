@@ -45,8 +45,8 @@
         <!-- Status Bar Footer -->
         <Border Grid.Row="2" Background="{DynamicResource HeaderBgBrush}" Padding="16,6" BorderBrush="{DynamicResource BorderSubtleBrush}" BorderThickness="0,1,0,0">
             <Grid ColumnDefinitions="*, Auto">
-                <TextBlock x:Name="StatusText" Text="Ready - F20SC Industrial Programming CW1" FontSize="11" Foreground="{DynamicResource TextMutedBrush}"/>
-                <TextBlock Grid.Column="1" Text="Yahtzee Engine v1.0" FontSize="11" Foreground="{DynamicResource TextMutedBrush}"/>
+                <TextBlock x:Name="StatusText" Text="Ready - F20SC Industrial Programming CW1" FontSize="11" Foreground="{DynamicResource PrimaryContainerBrush}"/>
+                <TextBlock Grid.Column="1" Text="Yahtzee CW1 v1.00.01" FontSize="11" Foreground="{DynamicResource PrimaryContainerBrush}"/>
             </Grid>
         </Border>
 

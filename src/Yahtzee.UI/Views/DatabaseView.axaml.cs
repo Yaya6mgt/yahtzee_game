@@ -122,7 +122,7 @@ public partial class DatabaseView : UserControl
 
             var border = new Border
             {
-                Background = Brush.Parse("#0F172A"),
+                Background = Brush.Parse("#141820"),
                 CornerRadius = new Avalonia.CornerRadius(6),
                 Padding = new Avalonia.Thickness(12, 8)
             };
@@ -197,7 +197,7 @@ public partial class DatabaseView : UserControl
 
             var border = new Border
             {
-                Background = Brush.Parse("#0F172A"),
+                Background = Brush.Parse("#141820"),
                 CornerRadius = new Avalonia.CornerRadius(6),
                 Padding = new Avalonia.Thickness(12, 8)
             };

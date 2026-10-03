@@ -8,127 +8,170 @@
 
     <Grid RowDefinitions="Auto, *">
 
-        <!-- Top Status & Action Bar -->
-        <Border Grid.Row="0" Background="{DynamicResource HeaderBgBrush}" Padding="16,12" BorderBrush="{DynamicResource BorderSubtleBrush}" BorderThickness="0,0,0,1">
+        <!-- Top Status & VIP Casino Action Bar -->
+        <Border Grid.Row="0" Background="{DynamicResource HeaderBgBrush}" Padding="16,12" BorderBrush="{DynamicResource GoldBorderBrush}" BorderThickness="0,0,0,1">
             <Grid ColumnDefinitions="Auto, *, Auto">
                 <!-- Round Badge -->
-                <Border Grid.Column="0" Background="{DynamicResource PrimaryContainerBrush}" CornerRadius="8" Padding="12,6">
-                    <TextBlock x:Name="RoundText" Text="ROUND 1 / 13" FontWeight="Bold" Foreground="{DynamicResource PrimaryLightBrush}"/>
+                <Border Grid.Column="0" Background="{DynamicResource PrimaryContainerBrush}" CornerRadius="8" Padding="14,7" BorderBrush="{DynamicResource GoldBorderBrush}" BorderThickness="1">
+                    <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                        <TextBlock Text="🏆" FontSize="14" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="RoundText" Text="ROUND 1 / 13" FontWeight="Black" Foreground="{DynamicResource PrimaryLightBrush}" FontSize="13" LetterSpacing="0.8"/>
+                    </StackPanel>
                 </Border>
 
                 <!-- Current Turn Banner -->
                 <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" Spacing="12">
-                    <Border Background="{DynamicResource WindowBgBrush}" CornerRadius="20" Padding="16,6" BorderBrush="{DynamicResource PrimaryBrush}" BorderThickness="1">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <TextBlock x:Name="TurnIconText" Text="" IsVisible="False"/>
-                            <TextBlock x:Name="TurnText" Text="Alice's Turn" FontWeight="Bold" Foreground="White" FontSize="16"/>
+                    <Border Background="{DynamicResource WindowBgBrush}" CornerRadius="20" Padding="18,6" BorderBrush="{DynamicResource GoldLuxuryBrush}" BorderThickness="1.5" BoxShadow="0 2 10 0 #30000000">
+                        <StackPanel Orientation="Horizontal" Spacing="10" VerticalAlignment="Center">
+                            <TextBlock x:Name="TurnIconText" Text="👑" FontSize="15" VerticalAlignment="Center"/>
+                            <TextBlock x:Name="TurnText" Text="Alice's Turn" FontWeight="Black" Foreground="{DynamicResource CasinoFeltBrush}" FontSize="15"/>
                         </StackPanel>
                     </Border>
 
-                    <Border x:Name="RollsBadge" Background="{DynamicResource PrimaryContainerBrush}" CornerRadius="16" Padding="14,6">
-                        <TextBlock x:Name="RollsText" Text="3 Rolls Remaining" FontWeight="SemiBold" Foreground="{DynamicResource PrimaryLightBrush}"/>
+                    <Border x:Name="RollsBadge" Background="{DynamicResource PrimaryContainerBrush}" CornerRadius="16" Padding="14,6" BorderBrush="{DynamicResource PrimaryLightBrush}" BorderThickness="1">
+                        <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                            <TextBlock Text="🎲" FontSize="12" VerticalAlignment="Center"/>
+                            <TextBlock x:Name="RollsText" Text="3 Rolls Remaining" FontWeight="Bold" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="12"/>
+                        </StackPanel>
                     </Border>
                 </StackPanel>
 
                 <!-- Save Game Action Button -->
                 <Button Grid.Column="2"
                         x:Name="SaveGameBtn"
-                        Content="Save Game"
-                        Background="{DynamicResource BorderSubtleBrush}"
-                        Foreground="White"
+                        Content="💾 Save Game"
+                        Background="{DynamicResource CardBgBrush}"
+                        Foreground="{DynamicResource GoldLuxuryBrush}"
+                        BorderBrush="{DynamicResource GoldBorderBrush}"
+                        BorderThickness="1"
                         CornerRadius="6"
-                        Padding="12,6"
+                        Padding="14,7"
+                        FontWeight="Bold"
                         Click="OnSaveGameClicked"/>
             </Grid>
         </Border>
 
-        <!-- Main Workspace (Dice Cup + Scorecard) -->
-        <Grid Grid.Row="1" ColumnDefinitions="420, *">
+        <!-- Main Workspace (Dice Cup + Casino Scorecard) -->
+        <Grid Grid.Row="1" ColumnDefinitions="400, *">
 
-            <!-- Left Column: Dice Cup Area -->
-            <Border Grid.Column="0" Background="{DynamicResource WindowBgBrush}" Padding="20" BorderBrush="{DynamicResource BorderSubtleBrush}" BorderThickness="0,0,1,0">
+            <!-- Left Column: Casino Dice Cup Area -->
+            <Border Grid.Column="0" Background="{DynamicResource CasinoDarkFeltBrush}" Padding="20" BorderBrush="{DynamicResource BorderSubtleBrush}" BorderThickness="0,0,1,0">
                 <Grid RowDefinitions="Auto, *, Auto, Auto">
                     <!-- Section Title -->
-                    <StackPanel Grid.Row="0" Spacing="4">
-                        <TextBlock Text="DICE CUP" FontSize="14" FontWeight="Bold" Foreground="{DynamicResource PrimaryLightBrush}"/>
-                        <TextBlock Text="Click a die to HOLD before rolling remaining dice" FontSize="11" Foreground="{DynamicResource TextMutedBrush}"/>
-                    </StackPanel>
+                    <Border Grid.Row="0" Background="#16221D" CornerRadius="8" Padding="14,10" BorderBrush="{DynamicResource GoldBorderBrush}" BorderThickness="1" Margin="0,0,0,10">
+                        <StackPanel Spacing="3">
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <TextBlock Text="🎲" FontSize="16"/>
+                                <TextBlock Text="VIP DICE CUP" FontSize="13" FontWeight="Black" Foreground="{DynamicResource GoldLuxuryBrush}" LetterSpacing="1"/>
+                            </StackPanel>
+                            <TextBlock Text="Click a die to HOLD before rolling remaining dice" FontSize="10.5" Foreground="{DynamicResource TextSecondaryBrush}"/>
+                        </StackPanel>
+                    </Border>
 
                     <!-- 5 Dice Controls Container -->
                     <UniformGrid Grid.Row="1" Rows="3" Columns="2" HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <controls:DiceControl x:Name="Die0" Margin="10"/>
-                        <controls:DiceControl x:Name="Die1" Margin="10"/>
-                        <controls:DiceControl x:Name="Die2" Margin="10"/>
-                        <controls:DiceControl x:Name="Die3" Margin="10"/>
-                        <controls:DiceControl x:Name="Die4" Margin="10"/>
+                        <controls:DiceControl x:Name="Die0" Margin="8"/>
+                        <controls:DiceControl x:Name="Die1" Margin="8"/>
+                        <controls:DiceControl x:Name="Die2" Margin="8"/>
+                        <controls:DiceControl x:Name="Die3" Margin="8"/>
+                        <controls:DiceControl x:Name="Die4" Margin="8"/>
                     </UniformGrid>
 
                     <!-- AI Status Banner -->
                     <Border Grid.Row="2"
                             x:Name="AiStatusBanner"
-                            Background="{DynamicResource PrimaryContainerBrush}"
+                            Background="#1F1708"
+                            BorderBrush="{DynamicResource GoldLuxuryBrush}"
+                            BorderThickness="1"
                             CornerRadius="8"
                             Padding="12"
                             Margin="0,0,0,12"
                             IsVisible="False">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="8">
-                            <TextBlock x:Name="AiStatusText" Text="Computer is thinking..." Foreground="{DynamicResource PrimaryLightBrush}" VerticalAlignment="Center" FontWeight="SemiBold"/>
+                            <TextBlock Text="🤖" FontSize="16" VerticalAlignment="Center"/>
+                            <TextBlock x:Name="AiStatusText" Text="Computer is thinking..." Foreground="{DynamicResource GoldBrightBrush}" VerticalAlignment="Center" FontWeight="Bold"/>
                         </StackPanel>
                     </Border>
 
                     <!-- Roll Action Button -->
                     <Button Grid.Row="3"
                             x:Name="RollBtn"
-                            Content="ROLL DICE (3 left)"
+                            Content="🎲 ROLL DICE (3)"
                             HorizontalAlignment="Stretch"
                             HorizontalContentAlignment="Center"
-                            Height="54"
-                            FontSize="18"
+                            Height="56"
+                            FontSize="17"
                             FontWeight="Black"
                             Background="{DynamicResource PrimaryBrush}"
                             Foreground="White"
                             CornerRadius="12"
+                            BorderBrush="{DynamicResource GoldBrightBrush}"
+                            BorderThickness="1"
                             Click="OnRollClicked"/>
                 </Grid>
             </Border>
 
-            <!-- Right Column: Scorecard & Score Previews -->
-            <Border Grid.Column="1" Background="{DynamicResource CardBgBrush}" Padding="20">
+            <!-- Right Column: VIP Scorecard Grid & Previews -->
+            <Border Grid.Column="1" Background="{DynamicResource WindowBgBrush}" Padding="18,16">
                 <Grid RowDefinitions="Auto, *, Auto">
 
-                    <!-- Player Scorecard Tabs & Header -->
-                    <Grid Grid.Row="0" ColumnDefinitions="*, Auto" Margin="0,0,0,10">
-                        <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="10" x:Name="PlayerTabsContainer"/>
-                        <TextBlock Grid.Column="1" Text="Select a category to score" FontSize="12" Foreground="{DynamicResource TextSecondaryBrush}" VerticalAlignment="Center"/>
+                    <!-- Player Scorecard Tabs & Action Header -->
+                    <Grid Grid.Row="0" ColumnDefinitions="*, Auto" Margin="0,0,0,12">
+                        <ScrollViewer Grid.Column="0" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+                            <StackPanel Orientation="Horizontal" Spacing="8" x:Name="PlayerTabsContainer"/>
+                        </ScrollViewer>
+                        <Border Grid.Column="1" Background="#141720" CornerRadius="6" Padding="10,4" BorderBrush="{DynamicResource GoldBorderBrush}" BorderThickness="1" VerticalAlignment="Center">
+                            <TextBlock Text="✨ Select a category to score" FontSize="11" FontWeight="SemiBold" Foreground="{DynamicResource GoldLuxuryBrush}"/>
+                        </Border>
                     </Grid>
 
-                    <!-- Scorecard Items List -->
-                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-                        <StackPanel x:Name="ScorecardRowsContainer" Spacing="6"/>
+                    <!-- Scorecard Items Grid List -->
+                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="0,0,0,10">
+                        <StackPanel x:Name="ScorecardRowsContainer" Spacing="4"/>
                     </ScrollViewer>
 
-                    <!-- Scorecard Totals Footer -->
-                    <Border Grid.Row="2" Background="{DynamicResource WindowBgBrush}" CornerRadius="10" Padding="16,12" Margin="0,10,0,0">
+                    <!-- Scorecard VIP Dashboard Totals Footer -->
+                    <Border Grid.Row="2" Background="#10131B" CornerRadius="12" Padding="16,12" BorderBrush="{DynamicResource GoldBorderBrush}" BorderThickness="1.5" BoxShadow="0 4 20 0 #40000000">
                         <Grid ColumnDefinitions="*, *, *, *">
-                            <StackPanel Grid.Column="0">
-                                <TextBlock Text="UPPER SUBTOTAL" FontSize="10" Foreground="{DynamicResource TextMutedBrush}" FontWeight="Bold"/>
-                                <TextBlock x:Name="UpperSubtotalText" Text="0 / 63" FontSize="16" FontWeight="Bold" Foreground="White"/>
-                            </StackPanel>
 
-                            <StackPanel Grid.Column="1">
-                                <TextBlock Text="BONUS (+35)" FontSize="10" Foreground="{DynamicResource TextMutedBrush}" FontWeight="Bold"/>
-                                <TextBlock x:Name="UpperBonusText" Text="0" FontSize="16" FontWeight="Bold" Foreground="{DynamicResource PrimaryBrush}"/>
-                            </StackPanel>
+                            <!-- Upper Subtotal Tile -->
+                            <Border Grid.Column="0" Background="#151922" CornerRadius="8" Padding="12,8" Margin="0,0,4,0" BorderBrush="#30D4AF37" BorderThickness="1">
+                                <StackPanel Spacing="3">
+                                    <TextBlock Text="UPPER SECTION" FontSize="9.5" Foreground="{DynamicResource TextMutedBrush}" FontWeight="Black" LetterSpacing="0.5"/>
+                                    <TextBlock x:Name="UpperSubtotalText" Text="0 / 63 pts" FontSize="16" FontWeight="Black" Foreground="White"/>
+                                    <TextBlock Text="Sum of 1s to 6s" FontSize="9" Foreground="{DynamicResource TextSecondaryBrush}"/>
+                                </StackPanel>
+                            </Border>
 
-                            <StackPanel Grid.Column="2">
-                                <TextBlock Text="LOWER TOTAL" FontSize="10" Foreground="{DynamicResource TextMutedBrush}" FontWeight="Bold"/>
-                                <TextBlock x:Name="LowerTotalText" Text="0" FontSize="16" FontWeight="Bold" Foreground="White"/>
-                            </StackPanel>
+                            <!-- Upper Bonus Tile -->
+                            <Border Grid.Column="1" Background="#18241B" CornerRadius="8" Padding="12,8" Margin="4,0,4,0" BorderBrush="#34D399" BorderThickness="1">
+                                <StackPanel Spacing="3">
+                                    <TextBlock Text="+35 PTS BONUS" FontSize="9.5" Foreground="{DynamicResource PrimaryLightBrush}" FontWeight="Black" LetterSpacing="0.5"/>
+                                    <TextBlock x:Name="UpperBonusText" Text="0 pt" FontSize="16" FontWeight="Black" Foreground="{DynamicResource GoldBrightBrush}"/>
+                                    <TextBlock Text="Unlocked at 63 pts" FontSize="9" Foreground="{DynamicResource PrimaryLightBrush}"/>
+                                </StackPanel>
+                            </Border>
 
-                            <StackPanel Grid.Column="3">
-                                <TextBlock Text="GRAND TOTAL" FontSize="10" Foreground="{DynamicResource GoldBrush}" FontWeight="Bold"/>
-                                <TextBlock x:Name="GrandTotalText" Text="0" FontSize="20" FontWeight="Black" Foreground="{DynamicResource GoldBrush}"/>
-                            </StackPanel>
+                            <!-- Lower Total Tile -->
+                            <Border Grid.Column="2" Background="#151922" CornerRadius="8" Padding="12,8" Margin="4,0,4,0" BorderBrush="#30D4AF37" BorderThickness="1">
+                                <StackPanel Spacing="3">
+                                    <TextBlock Text="LOWER SECTION" FontSize="9.5" Foreground="{DynamicResource TextMutedBrush}" FontWeight="Black" LetterSpacing="0.5"/>
+                                    <TextBlock x:Name="LowerTotalText" Text="0 pt" FontSize="16" FontWeight="Black" Foreground="White"/>
+                                    <TextBlock Text="Poker &amp; Combinations" FontSize="9" Foreground="{DynamicResource TextSecondaryBrush}"/>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- VIP Grand Total Tile -->
+                            <Border Grid.Column="3" Background="#281F0B" CornerRadius="8" Padding="12,8" Margin="4,0,0,0" BorderBrush="{DynamicResource GoldLuxuryBrush}" BorderThickness="1.5">
+                                <StackPanel Spacing="2">
+                                    <StackPanel Orientation="Horizontal" Spacing="4">
+                                        <TextBlock Text="👑" FontSize="10" VerticalAlignment="Center"/>
+                                        <TextBlock Text="VIP GRAND TOTAL" FontSize="10" Foreground="{DynamicResource GoldLuxuryBrush}" FontWeight="Black" LetterSpacing="0.8"/>
+                                    </StackPanel>
+                                    <TextBlock x:Name="GrandTotalText" Text="0 PTS" FontSize="20" FontWeight="Black" Foreground="{DynamicResource GoldBrightBrush}"/>
+                                </StackPanel>
+                            </Border>
+
                         </Grid>
                     </Border>
                 </Grid>
@@ -138,26 +181,33 @@
         <!-- Game Over Modal Overlay -->
         <Border Grid.Row="0" Grid.RowSpan="2"
                 x:Name="GameOverOverlay"
-                Background="#D0121214"
+                Background="#EE0A0C10"
                 IsVisible="False">
-            <Border Background="{DynamicResource CardBgBrush}"
-                    Width="500"
+            <Border Background="#141822"
+                    Width="520"
                     CornerRadius="16"
-                    Padding="24"
+                    Padding="28"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    BoxShadow="0 10 30 0 #A0000000">
-                <StackPanel Spacing="16">
-                    <TextBlock Text="GAME OVER!" FontSize="26" FontWeight="Black" Foreground="{DynamicResource GoldBrush}" HorizontalAlignment="Center"/>
-                    <TextBlock x:Name="WinnerText" Text="Alice Wins with 285 Points!" FontSize="18" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center"/>
+                    BorderBrush="{DynamicResource GoldLuxuryBrush}"
+                    BorderThickness="2"
+                    BoxShadow="0 15 40 0 #A0000000">
+                <StackPanel Spacing="18">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="10">
+                        <TextBlock Text="👑" FontSize="30"/>
+                        <TextBlock Text="VIP GAME OVER!" FontSize="24" FontWeight="Black" Foreground="{DynamicResource GoldBrightBrush}" VerticalAlignment="Center" LetterSpacing="1"/>
+                        <TextBlock Text="👑" FontSize="30"/>
+                    </StackPanel>
 
-                    <Border Background="{DynamicResource WindowBgBrush}" CornerRadius="10" Padding="12">
+                    <TextBlock x:Name="WinnerText" Text="Alice wins with 285 Points!" FontSize="17" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center"/>
+
+                    <Border Background="#0C0E14" CornerRadius="10" Padding="14" BorderBrush="{DynamicResource GoldBorderBrush}" BorderThickness="1">
                         <StackPanel x:Name="FinalStandingsContainer" Spacing="8"/>
                     </Border>
 
                     <Grid ColumnDefinitions="*, *">
-                        <Button Grid.Column="0" Content="High Scores" Margin="0,0,6,0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Background="{DynamicResource BorderSubtleBrush}" Foreground="White" Click="OnGameOverViewHighScoresClicked"/>
-                        <Button Grid.Column="1" Content="Play Again" Margin="6,0,0,0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Background="{DynamicResource PrimaryBrush}" Foreground="White" FontWeight="Bold" Click="OnGameOverPlayAgainClicked"/>
+                        <Button Grid.Column="0" Content="High Scores" Margin="0,0,6,0" Height="44" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="{DynamicResource CardBgBrush}" Foreground="White" BorderBrush="{DynamicResource BorderHighlightBrush}" BorderThickness="1" CornerRadius="8" FontWeight="SemiBold" Click="OnGameOverViewHighScoresClicked"/>
+                        <Button Grid.Column="1" Content="Play Again 🎲" Margin="6,0,0,0" Height="44" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="{DynamicResource PrimaryBrush}" Foreground="White" CornerRadius="8" FontWeight="Black" Click="OnGameOverPlayAgainClicked"/>
                     </Grid>
                 </StackPanel>
             </Border>

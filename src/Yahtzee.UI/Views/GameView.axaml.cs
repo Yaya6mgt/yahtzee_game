@@ -53,13 +53,12 @@ public partial class GameView : UserControl
     {
         if (_session == null) return;
 
-        // Top Status
         RoundText.Text = $"ROUND {_session.CurrentRound} / {GameSession.TotalRounds}";
         TurnText.Text = $"{_session.CurrentPlayer.Name}'s Turn";
         TurnIconText.Text = "";
 
         int rolls = _session.DiceCup.RollsRemaining;
-        RollsText.Text = $"{rolls} Roll{(rolls == 1 ? "" : "s")} Left";
+        RollsText.Text = $"{rolls} Roll{(rolls == 1 ? "" : "s")} Remaining";
         RollsBadge.Background = rolls switch
         {
             3 => Brush.Parse("#065F46"),
@@ -68,13 +67,11 @@ public partial class GameView : UserControl
             _ => Brush.Parse("#991B1B")
         };
 
-        // Roll Button State
         bool canRoll = _session.DiceCup.CanRoll && !_session.CurrentPlayer.IsAi;
         RollBtn.IsEnabled = canRoll;
-        RollBtn.Content = rolls > 0 ? $"ROLL DICE ({rolls} left)" : "NO ROLLS LEFT";
+        RollBtn.Content = rolls > 0 ? $"🎲 ROLL DICE ({rolls})" : "NO ROLLS LEFT";
         RollBtn.Background = canRoll ? GetThemeBrush("PrimaryBrush", "#10B981") : GetThemeBrush("BorderSubtleBrush", "#2E3138");
 
-        // Dice Displays
         var dice = _session.DiceCup.Dice;
         SetDieState(Die0, dice[0]);
         SetDieState(Die1, dice[1]);
@@ -82,20 +79,16 @@ public partial class GameView : UserControl
         SetDieState(Die3, dice[3]);
         SetDieState(Die4, dice[4]);
 
-        // Player Tabs
         RenderPlayerTabs();
 
-        // Scorecard Rows
         RenderScorecardRows();
 
-        // Totals
         var sc = _session.CurrentPlayer.Scorecard;
-        UpperSubtotalText.Text = $"{sc.UpperSectionSubtotal} / {Scorecard.UpperSectionBonusThreshold}";
-        UpperBonusText.Text = sc.UpperSectionBonus > 0 ? $"+{sc.UpperSectionBonus}" : "0";
-        LowerTotalText.Text = sc.LowerSectionTotal.ToString();
-        GrandTotalText.Text = sc.TotalScore.ToString();
+        UpperSubtotalText.Text = $"{sc.UpperSectionSubtotal} / {Scorecard.UpperSectionBonusThreshold} pts";
+        UpperBonusText.Text = sc.UpperSectionBonus > 0 ? $"+{sc.UpperSectionBonus} PTS (UNLOCKED)" : $"{sc.UpperSectionSubtotal} / 63 pts";
+        LowerTotalText.Text = $"{sc.LowerSectionTotal} pts";
+        GrandTotalText.Text = $"{sc.TotalScore} PTS";
 
-        // AI Status
         AiStatusBanner.IsVisible = _session.CurrentPlayer.IsAi;
         if (_session.CurrentPlayer.IsAi)
         {
@@ -114,20 +107,15 @@ public partial class GameView : UserControl
         if (_session == null || _session.CurrentPlayer.IsAi) return;
 
         bool toggled = _session.ToggleHold(index);
-        if (toggled)
-        {
-            RefreshUi();
-        }
+
+        if (toggled) RefreshUi();
     }
 
     private void OnRollClicked(object? sender, RoutedEventArgs e)
     {
         if (_session == null || _session.CurrentPlayer.IsAi) return;
 
-        if (_session.RollDice())
-        {
-            RefreshUi();
-        }
+        if (_session.RollDice()) RefreshUi();
     }
 
     private async void CheckAiTurn()
@@ -139,20 +127,21 @@ public partial class GameView : UserControl
             RollBtn.IsEnabled = false;
             AiStatusBanner.IsVisible = true;
 
-            await Task.Delay(600); // UI visual delay
+            await Task.Delay(600);
             await _session.ExecuteAiTurnStepAsync(() =>
             {
                 RefreshUi();
             });
 
             RefreshUi();
-            CheckAiTurn(); // Loop if consecutive AI players
+            CheckAiTurn();
         }
     }
 
     private void RenderPlayerTabs()
     {
         if (_session == null) return;
+
         PlayerTabsContainer.Children.Clear();
 
         for (int i = 0; i < _session.Players.Count; i++)
@@ -162,38 +151,69 @@ public partial class GameView : UserControl
 
             var border = new Border
             {
-                Background = isCurrent ? GetThemeBrush("PrimaryContainerBrush", "#064E3B") : GetThemeBrush("WindowBgBrush", "#121214"),
-                BorderBrush = isCurrent ? GetThemeBrush("PrimaryBrush", "#10B981") : GetThemeBrush("BorderSubtleBrush", "#2E3138"),
-                BorderThickness = new Avalonia.Thickness(1),
-                CornerRadius = new Avalonia.CornerRadius(6),
+                Background = isCurrent ? Brush.Parse("#0B382A") : Brush.Parse("#12151F"),
+                BorderBrush = isCurrent ? Brush.Parse("#D4AF37") : Brush.Parse("#252B36"),
+                BorderThickness = new Avalonia.Thickness(isCurrent ? 1.5 : 1),
+                CornerRadius = new Avalonia.CornerRadius(8),
                 Padding = new Avalonia.Thickness(12, 6)
             };
 
-            var stack = new StackPanel { Orientation = Orientation.Horizontal, Spacing = 6 };
-            if (player.IsAi)
+            var stack = new StackPanel { Orientation = Orientation.Horizontal, Spacing = 8, VerticalAlignment = VerticalAlignment.Center };
+
+            if (isCurrent)
             {
                 stack.Children.Add(new TextBlock
                 {
-                    Text = "[AI]",
+                    Text = "●",
                     FontSize = 10,
-                    FontWeight = FontWeight.Bold,
-                    Foreground = GetThemeBrush("PrimaryLightBrush", "#34D399"),
+                    Foreground = Brush.Parse("#10B981"),
                     VerticalAlignment = VerticalAlignment.Center
                 });
             }
+
+            if (player.IsAi)
+            {
+                var aiBorder = new Border
+                {
+                    Background = Brush.Parse("#2D1D06"),
+                    CornerRadius = new Avalonia.CornerRadius(4),
+                    Padding = new Avalonia.Thickness(5, 1),
+                    VerticalAlignment = VerticalAlignment.Center
+                };
+                aiBorder.Child = new TextBlock
+                {
+                    Text = "BOT",
+                    FontSize = 9,
+                    FontWeight = FontWeight.Black,
+                    Foreground = Brush.Parse("#FBBF24")
+                };
+                stack.Children.Add(aiBorder);
+            }
+
             stack.Children.Add(new TextBlock
             {
                 Text = player.Name,
-                FontWeight = isCurrent ? FontWeight.Bold : FontWeight.Normal,
-                Foreground = isCurrent ? Brushes.White : GetThemeBrush("TextSecondaryBrush", "#A1A1AA")
-            });
-            stack.Children.Add(new TextBlock
-            {
-                Text = $"({player.Scorecard.TotalScore} pts)",
-                FontSize = 11,
-                Foreground = Brush.Parse("#F59E0B"),
+                FontWeight = isCurrent ? FontWeight.Black : FontWeight.SemiBold,
+                Foreground = isCurrent ? Brushes.White : Brush.Parse("#A1A5B0"),
+                FontSize = 13,
                 VerticalAlignment = VerticalAlignment.Center
             });
+
+            var scorePill = new Border
+            {
+                Background = isCurrent ? Brush.Parse("#24200A") : Brush.Parse("#0B0E14"),
+                CornerRadius = new Avalonia.CornerRadius(4),
+                Padding = new Avalonia.Thickness(6, 2),
+                VerticalAlignment = VerticalAlignment.Center
+            };
+            scorePill.Child = new TextBlock
+            {
+                Text = $"{player.Scorecard.TotalScore} pts",
+                FontSize = 11,
+                FontWeight = FontWeight.Bold,
+                Foreground = isCurrent ? Brush.Parse("#FFD700") : Brush.Parse("#F59E0B")
+            };
+            stack.Children.Add(scorePill);
 
             border.Child = stack;
             PlayerTabsContainer.Children.Add(border);
@@ -203,6 +223,7 @@ public partial class GameView : UserControl
     private void RenderScorecardRows()
     {
         if (_session == null) return;
+
         ScorecardRowsContainer.Children.Clear();
 
         var scorecard = _session.CurrentPlayer.Scorecard;
@@ -210,111 +231,315 @@ public partial class GameView : UserControl
         bool hasRolled = _session.DiceCup.HasRolledThisRound;
         bool isAiTurn = _session.CurrentPlayer.IsAi;
 
-        foreach (ScoreCategory category in Enum.GetValues<ScoreCategory>())
+        int upperSubtotal = scorecard.UpperSectionSubtotal;
+        int neededForBonus = Math.Max(0, Scorecard.UpperSectionBonusThreshold - upperSubtotal);
+        bool hasBonus = scorecard.UpperSectionBonus > 0;
+
+        var upperHeader = new Border
         {
-            bool isFilled = scorecard.IsCategoryFilled(category);
-            int? filledScore = scorecard.GetScore(category);
-            int previewScore = previews[category];
+            Background = Brush.Parse("#0D201A"),
+            BorderBrush = Brush.Parse("#10B981"),
+            BorderThickness = new Avalonia.Thickness(1),
+            CornerRadius = new Avalonia.CornerRadius(8),
+            Padding = new Avalonia.Thickness(12, 8),
+            Margin = new Avalonia.Thickness(0, 2, 0, 4)
+        };
+        var upperGrid = new Grid { ColumnDefinitions = new ColumnDefinitions("*, Auto") };
 
-            var rowGrid = new Grid
-            {
-                ColumnDefinitions = new ColumnDefinitions("Auto, *, Auto, Auto"),
-                Margin = new Avalonia.Thickness(0, 2)
-            };
+        var upperTitleStack = new StackPanel { Orientation = Orientation.Horizontal, Spacing = 8, VerticalAlignment = VerticalAlignment.Center };
+        upperTitleStack.Children.Add(new TextBlock { Text = "🎯", FontSize = 14, VerticalAlignment = VerticalAlignment.Center });
+        upperTitleStack.Children.Add(new TextBlock { Text = "UPPER SECTION • NUMBERS (1 to 6)", FontWeight = FontWeight.Black, Foreground = Brush.Parse("#34D399"), FontSize = 12, VerticalAlignment = VerticalAlignment.Center });
+        Grid.SetColumn(upperTitleStack, 0);
 
-            var border = new Border
-            {
-                Background = isFilled ? Brush.Parse("#0F172A") : Brush.Parse("#1E293B"),
-                BorderBrush = isFilled ? Brush.Parse("#334155") : Brush.Parse("#475569"),
-                BorderThickness = new Avalonia.Thickness(1),
-                CornerRadius = new Avalonia.CornerRadius(6),
-                Padding = new Avalonia.Thickness(12, 8)
-            };
+        var upperBonusInfo = new TextBlock
+        {
+            Text = hasBonus ? "+35 PTS BONUS UNLOCKED!" : $"+35 Pts bonus target: {neededForBonus} pts needed",
+            FontSize = 11,
+            FontWeight = FontWeight.Bold,
+            Foreground = hasBonus ? Brush.Parse("#FFD700") : Brush.Parse("#A1A5B0"),
+            VerticalAlignment = VerticalAlignment.Center
+        };
+        Grid.SetColumn(upperBonusInfo, 1);
 
-            // Category Icon & Name
-            var nameStack = new StackPanel { Orientation = Orientation.Horizontal, Spacing = 8 };
-            nameStack.Children.Add(new TextBlock
-            {
-                Text = GetCategoryIcon(category),
-                FontSize = 14
-            });
-            nameStack.Children.Add(new TextBlock
-            {
-                Text = GetCategoryDisplayName(category),
-                FontWeight = FontWeight.SemiBold,
-                Foreground = isFilled ? Brush.Parse("#94A3B8") : Brushes.White
-            });
-            Grid.SetColumn(nameStack, 0);
+        upperGrid.Children.Add(upperTitleStack);
+        upperGrid.Children.Add(upperBonusInfo);
+        upperHeader.Child = upperGrid;
+        ScorecardRowsContainer.Children.Add(upperHeader);
 
-            // Description / Rule
-            var descText = new TextBlock
-            {
-                Text = GetCategoryDescription(category),
-                FontSize = 11,
-                Foreground = Brush.Parse("#64748B"),
-                Margin = new Avalonia.Thickness(12, 0, 0, 0),
-                VerticalAlignment = VerticalAlignment.Center
-            };
-            Grid.SetColumn(descText, 1);
+        foreach (ScoreCategory category in Enum.GetValues<ScoreCategory>().Where(c => (int)c <= 6))
+        {
+            RenderSingleRow(category, scorecard, previews, hasRolled, isAiTurn);
+        }
 
-            // Score Display / Preview Badge
-            if (isFilled)
+        var lowerHeader = new Border
+        {
+            Background = Brush.Parse("#231018"),
+            BorderBrush = Brush.Parse("#BE123C"),
+            BorderThickness = new Avalonia.Thickness(1),
+            CornerRadius = new Avalonia.CornerRadius(8),
+            Padding = new Avalonia.Thickness(12, 8),
+            Margin = new Avalonia.Thickness(0, 10, 0, 4)
+        };
+        var lowerGrid = new Grid { ColumnDefinitions = new ColumnDefinitions("*, Auto") };
+
+        var lowerTitleStack = new StackPanel { Orientation = Orientation.Horizontal, Spacing = 8, VerticalAlignment = VerticalAlignment.Center };
+        lowerTitleStack.Children.Add(new TextBlock { Text = "🃏", FontSize = 14, VerticalAlignment = VerticalAlignment.Center });
+        lowerTitleStack.Children.Add(new TextBlock { Text = "LOWER SECTION • CASINO COMBINATIONS", FontWeight = FontWeight.Black, Foreground = Brush.Parse("#FB7185"), FontSize = 12, VerticalAlignment = VerticalAlignment.Center });
+        Grid.SetColumn(lowerTitleStack, 0);
+
+        var lowerInfo = new TextBlock
+        {
+            Text = "Poker & VIP Figures",
+            FontSize = 11,
+            FontWeight = FontWeight.SemiBold,
+            Foreground = Brush.Parse("#A1A5B0"),
+            VerticalAlignment = VerticalAlignment.Center
+        };
+        Grid.SetColumn(lowerInfo, 1);
+
+        lowerGrid.Children.Add(lowerTitleStack);
+        lowerGrid.Children.Add(lowerInfo);
+        lowerHeader.Child = lowerGrid;
+        ScorecardRowsContainer.Children.Add(lowerHeader);
+
+        foreach (ScoreCategory category in Enum.GetValues<ScoreCategory>().Where(c => (int)c >= 7))
+        {
+            RenderSingleRow(category, scorecard, previews, hasRolled, isAiTurn);
+        }
+    }
+
+    private void RenderSingleRow(
+        ScoreCategory category,
+        Scorecard scorecard,
+        IReadOnlyDictionary<ScoreCategory, int> previews,
+        bool hasRolled,
+        bool isAiTurn)
+    {
+        bool isFilled = scorecard.IsCategoryFilled(category);
+        int? filledScore = scorecard.GetScore(category);
+        int previewScore = previews[category];
+        var details = GetCasinoCategoryDetails(category);
+
+        var border = new Border
+        {
+            CornerRadius = new Avalonia.CornerRadius(8),
+            Padding = new Avalonia.Thickness(10, 7),
+            Margin = new Avalonia.Thickness(0, 2)
+        };
+
+        var rowGrid = new Grid
+        {
+            ColumnDefinitions = new ColumnDefinitions("Auto, *, Auto, Auto")
+        };
+
+        if (isFilled)
+        {
+            if (filledScore > 0)
             {
-                var filledScoreText = new TextBlock
-                {
-                    Text = $"{filledScore} pts",
-                    FontWeight = FontWeight.Bold,
-                    Foreground = Brush.Parse("#10B981"),
-                    VerticalAlignment = VerticalAlignment.Center,
-                    Margin = new Avalonia.Thickness(12, 0, 12, 0)
-                };
-                Grid.SetColumn(filledScoreText, 2);
-                rowGrid.Children.Add(filledScoreText);
+                border.Background = Brush.Parse("#0E261D");
+                border.BorderBrush = Brush.Parse("#66D4AF37");
+                border.BorderThickness = new Avalonia.Thickness(1.5);
             }
             else
             {
-                var previewBorder = new Border
-                {
-                    Background = hasRolled ? GetThemeBrush("PrimaryContainerBrush", "#064E3B") : GetThemeBrush("WindowBgBrush", "#121214"),
-                    CornerRadius = new Avalonia.CornerRadius(4),
-                    Padding = new Avalonia.Thickness(8, 2),
-                    Margin = new Avalonia.Thickness(12, 0, 8, 0),
-                    VerticalAlignment = VerticalAlignment.Center
-                };
-                var previewText = new TextBlock
-                {
-                    Text = hasRolled ? $"+{previewScore} pts" : "-",
-                    FontSize = 12,
-                    FontWeight = FontWeight.Bold,
-                    Foreground = hasRolled ? (previewScore > 0 ? Brush.Parse("#F59E0B") : Brush.Parse("#94A3B8")) : Brush.Parse("#64748B")
-                };
-                previewBorder.Child = previewText;
-                Grid.SetColumn(previewBorder, 2);
-                rowGrid.Children.Add(previewBorder);
+                border.Background = Brush.Parse("#1E1116");
+                border.BorderBrush = Brush.Parse("#66BE123C");
+                border.BorderThickness = new Avalonia.Thickness(1);
+            }
+        }
+        else if (hasRolled)
+        {
+            border.Background = Brush.Parse("#10B981");
+            border.BorderBrush = previewScore > 0 ? Brush.Parse("#D4AF37") : Brush.Parse("#982E2E");
+            border.BorderThickness = new Avalonia.Thickness(1);
+            border.Cursor = isAiTurn ? new Avalonia.Input.Cursor(Avalonia.Input.StandardCursorType.Arrow) : new Avalonia.Input.Cursor(Avalonia.Input.StandardCursorType.Hand);
 
-                // Select Score Button
-                var selectBtn = new Button
+            if (!isAiTurn)
+            {
+                ScoreCategory capturedCat = category;
+                border.PointerPressed += (s, e) => OnScoreCategoryClicked(capturedCat);
+            }
+        }
+        else
+        {
+            border.Background = Brush.Parse("#10B981");
+            border.BorderBrush = Brush.Parse("#1B5643");
+            border.BorderThickness = new Avalonia.Thickness(1);
+        }
+
+        var leftStack = new StackPanel { Orientation = Orientation.Horizontal, Spacing = 10, VerticalAlignment = VerticalAlignment.Center };
+
+        var iconBorder = new Border
+        {
+            Background = Brush.Parse(details.BadgeBgHex),
+            CornerRadius = new Avalonia.CornerRadius(6),
+            Width = 28,
+            Height = 28,
+            VerticalAlignment = VerticalAlignment.Center
+        };
+        var iconText = new TextBlock
+        {
+            Text = details.Icon,
+            FontSize = 14,
+            Foreground = Brushes.White,
+            HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Center,
+            VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center
+        };
+        iconBorder.Child = iconText;
+        leftStack.Children.Add(iconBorder);
+
+        var titleStack = new StackPanel { VerticalAlignment = VerticalAlignment.Center, Spacing = 1 };
+        var titleText = new TextBlock
+        {
+            Text = details.Title,
+            FontWeight = isFilled ? FontWeight.Bold : FontWeight.SemiBold,
+            FontSize = 13,
+            Foreground = isFilled ? (filledScore > 0 ? Brush.Parse("#F8FAFC") : Brush.Parse("#A1A5B0")) : Brushes.White
+        };
+        titleStack.Children.Add(titleText);
+
+        leftStack.Children.Add(titleStack);
+        Grid.SetColumn(leftStack, 0);
+
+        var descText = new TextBlock
+        {
+            Text = details.Description,
+            FontSize = 10.5,
+            Foreground = isFilled ? Brush.Parse("#F1FFE2") : Brush.Parse("#033018"),
+            Margin = new Avalonia.Thickness(10, 0, 0, 0),
+            VerticalAlignment = VerticalAlignment.Center
+        };
+        Grid.SetColumn(descText, 1);
+
+        if (isFilled)
+        {
+            var scoreChip = new Border
+            {
+                CornerRadius = new Avalonia.CornerRadius(6),
+                Padding = new Avalonia.Thickness(12, 4),
+                Margin = new Avalonia.Thickness(8, 0, 0, 0),
+                VerticalAlignment = VerticalAlignment.Center
+            };
+
+            if (filledScore > 0)
+            {
+                scoreChip.Background = Brush.Parse("#26200A");
+                scoreChip.BorderBrush = Brush.Parse("#D4AF37");
+                scoreChip.BorderThickness = new Avalonia.Thickness(1);
+                var t = new TextBlock
                 {
-                    Content = "Score",
-                    Background = Brush.Parse("#10B981"),
-                    Foreground = Brushes.White,
-                    Padding = new Avalonia.Thickness(10, 4),
-                    CornerRadius = new Avalonia.CornerRadius(4),
-                    IsEnabled = hasRolled && !isAiTurn,
-                    VerticalAlignment = VerticalAlignment.Center
+                    Text = $"✓ {filledScore} PTS",
+                    FontSize = 12.5,
+                    FontWeight = FontWeight.Black,
+                    Foreground = Brush.Parse("#FFD700")
                 };
-                ScoreCategory capturedCategory = category;
-                selectBtn.Click += (s, e) => OnScoreCategoryClicked(capturedCategory);
-                Grid.SetColumn(selectBtn, 3);
-                rowGrid.Children.Add(selectBtn);
+                scoreChip.Child = t;
+            }
+            else
+            {
+                scoreChip.Background = Brush.Parse("#2B1218");
+                scoreChip.BorderBrush = Brush.Parse("#80BE123C");
+                scoreChip.BorderThickness = new Avalonia.Thickness(1);
+                var t = new TextBlock
+                {
+                    Text = "✕ 0 PT",
+                    FontSize = 11,
+                    FontWeight = FontWeight.Bold,
+                    Foreground = Brush.Parse("#FB7185")
+                };
+                scoreChip.Child = t;
             }
 
-            rowGrid.Children.Add(nameStack);
-            rowGrid.Children.Add(descText);
-
-            border.Child = rowGrid;
-            ScorecardRowsContainer.Children.Add(border);
+            Grid.SetColumn(scoreChip, 2);
+            Grid.SetColumnSpan(scoreChip, 2);
+            rowGrid.Children.Add(scoreChip);
         }
+        else if (hasRolled)
+        {
+            var previewChip = new Border
+            {
+                CornerRadius = new Avalonia.CornerRadius(5),
+                Padding = new Avalonia.Thickness(8, 3),
+                Margin = new Avalonia.Thickness(8, 0, 6, 0),
+                VerticalAlignment = VerticalAlignment.Center
+            };
+
+            if (previewScore > 0)
+            {
+                previewChip.Background = Brush.Parse("#382606");
+                previewChip.BorderBrush = Brush.Parse("#F59E0B");
+                previewChip.BorderThickness = new Avalonia.Thickness(1);
+                var pText = new TextBlock
+                {
+                    Text = $"+{previewScore} PTS",
+                    FontSize = 12,
+                    FontWeight = FontWeight.Black,
+                    Foreground = Brush.Parse("#FBBF24")
+                };
+                previewChip.Child = pText;
+            }
+            else
+            {
+                previewChip.Background = Brush.Parse("#2B1218");
+                previewChip.BorderBrush = Brush.Parse("#9F1239");
+                previewChip.BorderThickness = new Avalonia.Thickness(1);
+                var pText = new TextBlock
+                {
+                    Text = "0 PT",
+                    FontSize = 10,
+                    FontWeight = FontWeight.Bold,
+                    Foreground = Brush.Parse("#FDA4AF")
+                };
+                previewChip.Child = pText;
+            }
+            Grid.SetColumn(previewChip, 2);
+            rowGrid.Children.Add(previewChip);
+
+            var selectBtn = new Button
+            {
+                Content = "SCORE",
+                Background = previewScore > 0 ? Brush.Parse("#10B981") : Brush.Parse("#9F1239"),
+                Foreground = Brushes.White,
+                Padding = new Avalonia.Thickness(12, 5),
+                CornerRadius = new Avalonia.CornerRadius(6),
+                FontWeight = FontWeight.Black,
+                FontSize = 11,
+                IsEnabled = !isAiTurn,
+                VerticalAlignment = VerticalAlignment.Center
+            };
+            ScoreCategory capturedCat = category;
+            selectBtn.Click += (s, e) => OnScoreCategoryClicked(capturedCat);
+            Grid.SetColumn(selectBtn, 3);
+            rowGrid.Children.Add(selectBtn);
+        }
+        else
+        {
+            var placeholderBorder = new Border
+            {
+                Background = Brush.Parse("#08533A"),
+                CornerRadius = new Avalonia.CornerRadius(4),
+                Padding = new Avalonia.Thickness(10, 3),
+                Margin = new Avalonia.Thickness(8, 0, 0, 0),
+                VerticalAlignment = VerticalAlignment.Center
+            };
+            var placeholderText = new TextBlock
+            {
+                Text = "--",
+                FontSize = 12,
+                FontWeight = FontWeight.Bold,
+                Foreground = Brush.Parse("#B0D2BF")
+            };
+            placeholderBorder.Child = placeholderText;
+            Grid.SetColumn(placeholderBorder, 2);
+            Grid.SetColumnSpan(placeholderBorder, 2);
+            rowGrid.Children.Add(placeholderBorder);
+        }
+
+        rowGrid.Children.Add(leftStack);
+        rowGrid.Children.Add(descText);
+
+        border.Child = rowGrid;
+        ScorecardRowsContainer.Children.Add(border);
     }
 
     private void OnScoreCategoryClicked(ScoreCategory category)
@@ -336,7 +561,7 @@ public partial class GameView : UserControl
         var winners = _session.GetRankedPlayers();
         var winner = winners.First();
 
-        WinnerText.Text = $"{winner.Name} Wins with {winner.Scorecard.TotalScore} Points!";
+        WinnerText.Text = $"🏆 {winner.Name} wins with {winner.Scorecard.TotalScore} Points! 🏆";
         FinalStandingsContainer.Children.Clear();
 
         for (int i = 0; i < winners.Count; i++)
@@ -348,28 +573,39 @@ public partial class GameView : UserControl
                 Margin = new Avalonia.Thickness(0, 4)
             };
 
+            string rankLabel = i switch
+            {
+                0 => "🥇 1st",
+                1 => "🥈 2nd",
+                2 => "🥉 3rd",
+                _ => $"{i + 1}th"
+            };
+
             var rankText = new TextBlock
             {
-                Text = i == 0 ? "1st" : (i == 1 ? "2nd" : (i == 2 ? "3rd" : $"{i + 1}th")),
-                FontWeight = FontWeight.Bold,
-                Foreground = i == 0 ? Brush.Parse("#F59E0B") : Brushes.White,
-                Margin = new Avalonia.Thickness(0, 0, 10, 0)
+                Text = rankLabel,
+                FontWeight = FontWeight.Black,
+                Foreground = i == 0 ? Brush.Parse("#FFD700") : Brushes.White,
+                Margin = new Avalonia.Thickness(0, 0, 12, 0),
+                FontSize = 14
             };
             Grid.SetColumn(rankText, 0);
 
             var nameText = new TextBlock
             {
-                Text = p.Name,
-                FontWeight = FontWeight.SemiBold,
-                Foreground = Brushes.White
+                Text = p.Name + (p.IsAi ? " (BOT)" : ""),
+                FontWeight = FontWeight.Bold,
+                Foreground = Brushes.White,
+                FontSize = 14
             };
             Grid.SetColumn(nameText, 1);
 
             var scoreText = new TextBlock
             {
-                Text = $"{p.Scorecard.TotalScore} pts",
-                FontWeight = FontWeight.Bold,
-                Foreground = Brush.Parse("#10B981")
+                Text = $"{p.Scorecard.TotalScore} PTS",
+                FontWeight = FontWeight.Black,
+                Foreground = Brush.Parse("#10B981"),
+                FontSize = 14
             };
             Grid.SetColumn(scoreText, 2);
 
@@ -397,58 +633,23 @@ public partial class GameView : UserControl
         PlayAgainRequested?.Invoke(this, EventArgs.Empty);
     }
 
-    private static string GetCategoryIcon(ScoreCategory c) => c switch
+    private static (string Icon, string BadgeBgHex, string Title, string Description) GetCasinoCategoryDetails(ScoreCategory c) => c switch
     {
-        ScoreCategory.Aces => "[1]",
-        ScoreCategory.Twos => "[2]",
-        ScoreCategory.Threes => "[3]",
-        ScoreCategory.Fours => "[4]",
-        ScoreCategory.Fives => "[5]",
-        ScoreCategory.Sixes => "[6]",
-        ScoreCategory.ThreeOfAKind => "[3K]",
-        ScoreCategory.FourOfAKind => "[4K]",
-        ScoreCategory.FullHouse => "[FH]",
-        ScoreCategory.SmallStraight => "[SS]",
-        ScoreCategory.LargeStraight => "[LS]",
-        ScoreCategory.Yahtzee => "[Y!]",
-        ScoreCategory.Chance => "[?]",
-        _ => ""
-    };
+        ScoreCategory.Aces => ("⚀", "#044D3A", "ACES", "Sum of all 1"),
+        ScoreCategory.Twos => ("⚁", "#044D3A", "TWOS", "Sum of all 2"),
+        ScoreCategory.Threes => ("⚂", "#044D3A", "THREES", "Sum of all 3"),
+        ScoreCategory.Fours => ("⚃", "#044D3A", "FOURS", "Sum of all 4"),
+        ScoreCategory.Fives => ("⚄", "#044D3A", "FIVES", "Sum of all 5"),
+        ScoreCategory.Sixes => ("⚅", "#044D3A", "SIXES", "Sum of all 6"),
 
-    private static string GetCategoryDisplayName(ScoreCategory c) => c switch
-    {
-        ScoreCategory.Aces => "Aces",
-        ScoreCategory.Twos => "Twos",
-        ScoreCategory.Threes => "Threes",
-        ScoreCategory.Fours => "Fours",
-        ScoreCategory.Fives => "Fives",
-        ScoreCategory.Sixes => "Sixes",
-        ScoreCategory.ThreeOfAKind => "3 of a Kind",
-        ScoreCategory.FourOfAKind => "4 of a Kind",
-        ScoreCategory.FullHouse => "Full House",
-        ScoreCategory.SmallStraight => "Small Straight",
-        ScoreCategory.LargeStraight => "Large Straight",
-        ScoreCategory.Yahtzee => "YAHTZEE",
-        ScoreCategory.Chance => "Chance",
-        _ => c.ToString()
-    };
-
-    private static string GetCategoryDescription(ScoreCategory c) => c switch
-    {
-        ScoreCategory.Aces => "Sum of 1s",
-        ScoreCategory.Twos => "Sum of 2s",
-        ScoreCategory.Threes => "Sum of 3s",
-        ScoreCategory.Fours => "Sum of 4s",
-        ScoreCategory.Fives => "Sum of 5s",
-        ScoreCategory.Sixes => "Sum of 6s",
-        ScoreCategory.ThreeOfAKind => "At least 3 same -> Sum all",
-        ScoreCategory.FourOfAKind => "At least 4 same -> Sum all",
-        ScoreCategory.FullHouse => "3 of one & 2 of another -> 25",
-        ScoreCategory.SmallStraight => "4 sequence dice -> 30",
-        ScoreCategory.LargeStraight => "5 sequence dice -> 40",
-        ScoreCategory.Yahtzee => "All 5 dice same -> 50",
-        ScoreCategory.Chance => "Sum of all dice",
-        _ => ""
+        ScoreCategory.ThreeOfAKind => ("🎰", "#8B152B", "3 OF A KIND", "At least 3 matching dice → Sum of all 5 dice"),
+        ScoreCategory.FourOfAKind => ("🔥", "#BE123C", "4 OF A KIND", "At least 4 matching dice → Sum of all 5 dice"),
+        ScoreCategory.FullHouse => ("🏠", "#D97706", "FULL HOUSE", "3 of one kind + 2 of another → 25 pts"),
+        ScoreCategory.SmallStraight => ("⚡", "#059669", "SMALL STRAIGHT", "Sequence of 4 dice → 30 pts"),
+        ScoreCategory.LargeStraight => ("👑", "#7C3AED", "LARGE STRAIGHT", "Sequence of 5 dice → 40 pts"),
+        ScoreCategory.Yahtzee => ("💎", "#D4AF37", "YAHTZEE VIP!", "All 5 dice matching → 50 pts"),
+        ScoreCategory.Chance => ("🎲", "#0D9488", "CHANCE", "Any combination → Sum of all 5 dice"),
+        _ => ("🎲", "#686D7A", c.ToString(), "")
     };
 
     private static IBrush GetThemeBrush(string key, string fallbackHex)

@@ -7,12 +7,12 @@
 
     <Grid>
         <!-- Luxury Textured Background Image -->
-        <Image Source="avares://Yahtzee.UI/Assets/background.png"
+        <Image Source="avares://Yahtzee.UI/Assets/background.jpeg"
                Stretch="UniformToFill"
-               Opacity="0.55"/>
+               Opacity="0.85"/>
 
         <!-- Dark Dimming Gradient Overlay -->
-        <Border Background="#C5101114"/>
+        <Border Background="#C5101107"/>
 
         <!-- Main Content Area -->
         <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -42,15 +42,11 @@
                                    HorizontalAlignment="Center"
                                    LetterSpacing="1"/>
 
-                        <TextBlock Text="Configure your game mode and players to begin playing"
-                                   FontSize="13"
-                                   Foreground="{DynamicResource TextSecondaryBrush}"
-                                   HorizontalAlignment="Center"/>
                     </StackPanel>
 
                     <!-- Game Mode Selection Cards -->
                     <Border Background="{DynamicResource GlassBgBrush}"
-                            BorderBrush="{DynamicResource GoldBorderBrush}"
+                            BorderBrush="{DynamicResource GlassBgBrush}"
                             BorderThickness="1"
                             CornerRadius="6"
                             Padding="24"
@@ -125,7 +121,7 @@
 
                     <!-- Player Configuration Section -->
                     <Border Background="{DynamicResource GlassBgBrush}"
-                            BorderBrush="{DynamicResource GoldBorderBrush}"
+                            BorderBrush="{DynamicResource GlassBgBrush}"
                             BorderThickness="1"
                             CornerRadius="6"
                             Padding="24"

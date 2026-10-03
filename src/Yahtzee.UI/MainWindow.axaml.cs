@@ -43,7 +43,7 @@ public partial class MainWindow : Window
         try
         {
             await _database.InitializeDatabaseAsync();
-            StatusText.Text = "Database initialized successfully.";
+            StatusText.Text = "Database initialized successfully";
         }
         catch (Exception ex)
         {
@@ -187,7 +187,7 @@ public partial class MainWindow : Window
     {
         IBrush activeBg = TryGetResourceBrush("PrimaryContainerBrush", "#064E3B");
         IBrush inactiveBg = TryGetResourceBrush("HeaderBgBrush", "#1B1C20");
-        IBrush activeFg = TryGetResourceBrush("TextPrimaryBrush", "#F4F4F5");
+        IBrush activeFg = TryGetResourceBrush("TextPrimaryBrush", "#F7EEBC");
         IBrush inactiveFg = TryGetResourceBrush("TextSecondaryBrush", "#A1A1AA");
 
         NavNewGameBtn.Background = inactiveBg;

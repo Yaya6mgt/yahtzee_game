@@ -48,19 +48,19 @@
                      (2,0) (2,1) (2,2) -->
                 <Grid RowDefinitions="*,*,*" ColumnDefinitions="*,*,*">
                     <!-- Top-Left -->
-                    <Ellipse Grid.Row="0" Grid.Column="0" x:Name="Pip00" Width="14" Height="14" Fill="#0F172A" IsVisible="False"/>
+                    <Ellipse Grid.Row="0" Grid.Column="0" x:Name="Pip00" Width="14" Height="14" Fill="#0A0C10" IsVisible="False"/>
                     <!-- Top-Right -->
-                    <Ellipse Grid.Row="0" Grid.Column="2" x:Name="Pip02" Width="14" Height="14" Fill="#0F172A" IsVisible="False"/>
+                    <Ellipse Grid.Row="0" Grid.Column="2" x:Name="Pip02" Width="14" Height="14" Fill="#0A0C10" IsVisible="False"/>
                     <!-- Middle-Left -->
-                    <Ellipse Grid.Row="1" Grid.Column="0" x:Name="Pip10" Width="14" Height="14" Fill="#0F172A" IsVisible="False"/>
+                    <Ellipse Grid.Row="1" Grid.Column="0" x:Name="Pip10" Width="14" Height="14" Fill="#0A0C10" IsVisible="False"/>
                     <!-- Center -->
-                    <Ellipse Grid.Row="1" Grid.Column="1" x:Name="Pip11" Width="14" Height="14" Fill="#0F172A" IsVisible="False"/>
+                    <Ellipse Grid.Row="1" Grid.Column="1" x:Name="Pip11" Width="14" Height="14" Fill="#0A0C10" IsVisible="False"/>
                     <!-- Middle-Right -->
-                    <Ellipse Grid.Row="1" Grid.Column="2" x:Name="Pip12" Width="14" Height="14" Fill="#0F172A" IsVisible="False"/>
+                    <Ellipse Grid.Row="1" Grid.Column="2" x:Name="Pip12" Width="14" Height="14" Fill="#0A0C10" IsVisible="False"/>
                     <!-- Bottom-Left -->
-                    <Ellipse Grid.Row="2" Grid.Column="0" x:Name="Pip20" Width="14" Height="14" Fill="#0F172A" IsVisible="False"/>
+                    <Ellipse Grid.Row="2" Grid.Column="0" x:Name="Pip20" Width="14" Height="14" Fill="#0A0C10" IsVisible="False"/>
                     <!-- Bottom-Right -->
-                    <Ellipse Grid.Row="2" Grid.Column="2" x:Name="Pip22" Width="14" Height="14" Fill="#0F172A" IsVisible="False"/>
+                    <Ellipse Grid.Row="2" Grid.Column="2" x:Name="Pip22" Width="14" Height="14" Fill="#0A0C10" IsVisible="False"/>
                 </Grid>
 
                 <!-- Value Fallback Number Overlay -->
@@ -68,7 +68,7 @@
                            Text="1"
                            FontSize="36"
                            FontWeight="Black"
-                           Foreground="#0F172A"
+                           Foreground="#0A0C10"
                            HorizontalAlignment="Center"
                            VerticalAlignment="Center"
                            IsVisible="False"/>
