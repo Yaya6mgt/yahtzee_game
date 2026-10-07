@@ -15,7 +15,6 @@
         <Border Grid.Row="0" Background="{DynamicResource HeaderBgBrush}" Padding="16,10" BorderBrush="{DynamicResource BorderSubtleBrush}" BorderThickness="0,0,0,1">
             <Grid ColumnDefinitions="Auto, *, Auto">
 
-                <!-- Logo Title -->
                 <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="10" VerticalAlignment="Center">
                     <TextBlock Text="YAHTZEE DELUXE" FontSize="16" FontWeight="Black" Foreground="{DynamicResource GoldLuxuryBrush}" VerticalAlignment="Center" LetterSpacing="1.5"/>
                     <Border Background="{DynamicResource GoldContainerBrush}" BorderBrush="{DynamicResource GoldLuxuryBrush}" BorderThickness="1" CornerRadius="2" Padding="6,2" VerticalAlignment="Center">
@@ -23,7 +22,6 @@
                     </Border>
                 </StackPanel>
 
-                <!-- Navigation Tabs -->
                 <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" Spacing="8">
                     <Button x:Name="NavNewGameBtn" Content="New Game" Background="{DynamicResource PrimaryContainerBrush}" Foreground="{DynamicResource TextPrimaryBrush}" CornerRadius="4" Padding="14,6" FontWeight="SemiBold" Click="OnNavNewGameClicked"/>
                     <Button x:Name="NavSaveGameBtn" Content="Save Game" Background="{DynamicResource HeaderBgBrush}" Foreground="{DynamicResource TextSecondaryBrush}" CornerRadius="4" Padding="14,6" FontWeight="SemiBold" Click="OnNavSaveGameClicked"/>
@@ -31,7 +29,6 @@
                     <Button x:Name="NavHighScoresBtn" Content="High Scores" Background="{DynamicResource HeaderBgBrush}" Foreground="{DynamicResource TextSecondaryBrush}" CornerRadius="4" Padding="14,6" FontWeight="SemiBold" Click="OnNavHighScoresClicked"/>
                 </StackPanel>
 
-                <!-- Status & Exit Button -->
                 <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
                     <Button Content="Exit" Background="{DynamicResource RoseBrush}" Foreground="White" CornerRadius="4" Padding="14,6" FontWeight="SemiBold" Click="OnNavExitClicked"/>
                 </StackPanel>
@@ -39,10 +36,9 @@
             </Grid>
         </Border>
 
-        <!-- Main Content Area -->
         <ContentControl Grid.Row="1" x:Name="MainContentHost"/>
 
-        <!-- Status Bar Footer -->
+        <!-- Footer -->
         <Border Grid.Row="2" Background="{DynamicResource HeaderBgBrush}" Padding="16,6" BorderBrush="{DynamicResource BorderSubtleBrush}" BorderThickness="0,1,0,0">
             <Grid ColumnDefinitions="*, Auto">
                 <TextBlock x:Name="StatusText" Text="Ready - F20SC Industrial Programming CW1" FontSize="11" Foreground="{DynamicResource PrimaryContainerBrush}"/>
@@ -50,7 +46,6 @@
             </Grid>
         </Border>
 
-        <!-- Save before exit Confirmation Modal -->
         <Border Grid.Row="0" Grid.RowSpan="3"
                 x:Name="SavePromptOverlay"
                 Background="#D0121214"

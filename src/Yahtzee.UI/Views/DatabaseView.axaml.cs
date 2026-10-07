@@ -12,7 +12,7 @@ namespace Yahtzee.UI.Views;
 public partial class DatabaseView : UserControl
 {
     private IGameDatabaseRepository? _database;
-    private int _selectedTab = 0; // 0 = Top Overall, 1 = By Player, 2 = History
+    private int _selectedTab = 0;
 
     public DatabaseView()
     {
@@ -122,7 +122,7 @@ public partial class DatabaseView : UserControl
 
             var border = new Border
             {
-                Background = Brush.Parse("#141820"),
+                Background = Brush.Parse("#059669"),
                 CornerRadius = new Avalonia.CornerRadius(6),
                 Padding = new Avalonia.Thickness(12, 8)
             };
@@ -147,14 +147,14 @@ public partial class DatabaseView : UserControl
             {
                 Text = $"{r.Score} pts",
                 FontWeight = FontWeight.Black,
-                Foreground = Brush.Parse("#10B981")
+                Foreground = Brush.Parse("#FBBF24")
             };
             Grid.SetColumn(scoreText, 2);
 
             var typeText = new TextBlock
             {
                 Text = r.IsAi ? "AI" : "Human",
-                Foreground = Brush.Parse("#A1A1AA")
+                Foreground = Brush.Parse("#6FD6B0")
             };
             Grid.SetColumn(typeText, 3);
 
@@ -162,7 +162,7 @@ public partial class DatabaseView : UserControl
             {
                 Text = r.PlayedAt.ToLocalTime().ToString("yyyy-MM-dd HH:mm"),
                 FontSize = 11,
-                Foreground = Brush.Parse("#64748B")
+                Foreground = Brush.Parse("#6FD6B0")
             };
             Grid.SetColumn(dateText, 4);
 
@@ -197,24 +197,24 @@ public partial class DatabaseView : UserControl
 
             var border = new Border
             {
-                Background = Brush.Parse("#141820"),
+                Background = Brush.Parse("#059669"),
                 CornerRadius = new Avalonia.CornerRadius(6),
                 Padding = new Avalonia.Thickness(12, 8)
             };
 
-            var rankText = new TextBlock { Text = $"#{i + 1}", Foreground = Brush.Parse("#94A3B8") };
+            var rankText = new TextBlock { Text = $"#{i + 1}", Foreground = Brush.Parse("#6FD6B0") };
             Grid.SetColumn(rankText, 0);
 
             var winnerText = new TextBlock { Text = $"🏆 {h.WinnerName}", FontWeight = FontWeight.Bold, Foreground = Brushes.White };
             Grid.SetColumn(winnerText, 1);
 
-            var scoreText = new TextBlock { Text = $"{h.WinnerScore} pts", FontWeight = FontWeight.Bold, Foreground = Brush.Parse("#F59E0B") };
+            var scoreText = new TextBlock { Text = $"{h.WinnerScore} pts", FontWeight = FontWeight.Bold, Foreground = Brush.Parse("#FBBF24") };
             Grid.SetColumn(scoreText, 2);
 
-            var countText = new TextBlock { Text = $"{h.PlayerCount} Players", Foreground = Brush.Parse("#94A3B8") };
+            var countText = new TextBlock { Text = $"{h.PlayerCount} Players", Foreground = Brush.Parse("#6FD6B0") };
             Grid.SetColumn(countText, 3);
 
-            var dateText = new TextBlock { Text = h.PlayedAt.ToLocalTime().ToString("yyyy-MM-dd HH:mm"), FontSize = 11, Foreground = Brush.Parse("#64748B") };
+            var dateText = new TextBlock { Text = h.PlayedAt.ToLocalTime().ToString("yyyy-MM-dd HH:mm"), FontSize = 11, Foreground = Brush.Parse("#6FD6B0") };
             Grid.SetColumn(dateText, 4);
 
             grid.Children.Add(rankText);

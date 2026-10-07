@@ -6,20 +6,16 @@
              x:Class="Yahtzee.UI.Views.NewGameView">
 
     <Grid>
-        <!-- Luxury Textured Background Image -->
         <Image Source="avares://Yahtzee.UI/Assets/background.jpeg"
                Stretch="UniformToFill"
                Opacity="0.85"/>
 
-        <!-- Dark Dimming Gradient Overlay -->
         <Border Background="#C5101107"/>
 
-        <!-- Main Content Area -->
         <ScrollViewer VerticalScrollBarVisibility="Auto">
             <Border Padding="36,40">
                 <StackPanel MaxWidth="620" HorizontalAlignment="Center" Spacing="28">
 
-                    <!-- Luxury Header Section -->
                     <StackPanel Spacing="6" HorizontalAlignment="Center">
                         <Border Background="{DynamicResource GoldContainerBrush}"
                                 BorderBrush="{DynamicResource GoldLuxuryBrush}"
@@ -59,7 +55,6 @@
                                        LetterSpacing="1.5"/>
 
                             <Grid ColumnDefinitions="*,*,*">
-                                <!-- Solo Mode Button -->
                                 <Button Grid.Column="0"
                                         x:Name="SoloModeBtn"
                                         Margin="0,0,6,0"
@@ -78,7 +73,6 @@
                                     </StackPanel>
                                 </Button>
 
-                                <!-- Versus AI Button -->
                                 <Button Grid.Column="1"
                                         x:Name="VsAiBtn"
                                         Margin="6,0,6,0"
@@ -97,7 +91,6 @@
                                     </StackPanel>
                                 </Button>
 
-                                <!-- Hotseat Multiplayer Button -->
                                 <Button Grid.Column="2"
                                         x:Name="HotseatBtn"
                                         Margin="6,0,0,0"
@@ -151,11 +144,11 @@
                         </StackPanel>
                     </Border>
 
-                    <!-- Start Game Action Button -->
                     <Button x:Name="StartGameBtn"
                             Content="START GAME"
                             HorizontalAlignment="Stretch"
                             HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
                             Height="54"
                             FontSize="16"
                             FontWeight="Black"

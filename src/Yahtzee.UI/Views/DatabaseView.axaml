@@ -6,19 +6,14 @@
              x:Class="Yahtzee.UI.Views.DatabaseView">
 
     <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <Border Padding="24">
+        <Border Background="{DynamicResource HeaderBgBrush}" Padding="24">
             <StackPanel Spacing="20" MaxWidth="800" HorizontalAlignment="Center">
 
-                <!-- Title Header -->
                 <StackPanel Spacing="4" HorizontalAlignment="Center">
                     <TextBlock Text="GAMES DATABASE &amp; LEADERBOARD"
                                FontSize="26"
                                FontWeight="Black"
                                Foreground="{DynamicResource GoldBrush}"
-                               HorizontalAlignment="Center"/>
-                    <TextBlock Text="High scores and historical match records stored in SQLite"
-                               FontSize="13"
-                               Foreground="{DynamicResource TextSecondaryBrush}"
                                HorizontalAlignment="Center"/>
                 </StackPanel>
 
@@ -31,10 +26,22 @@
                             <Button x:Name="RecentHistoryBtn" Content="Match History" Background="{DynamicResource WindowBgBrush}" Foreground="{DynamicResource TextSecondaryBrush}" CornerRadius="6" Click="OnFilterTabClicked"/>
                         </StackPanel>
 
-                        <!-- Search Player Input (Visible on By Player tab) -->
                         <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="6" x:Name="PlayerSearchContainer" IsVisible="False">
-                            <TextBox x:Name="PlayerSearchInput" PlaceholderText="Enter player name..." Width="180"/>
-                            <Button Content="Search" Background="{DynamicResource PrimaryBrush}" Foreground="White" Click="OnPlayerSearchClicked"/>
+                            <TextBox x:Name="PlayerSearchInput"
+                                     PlaceholderText="Enter player name..."
+                                     Width="180"
+                                     Background="{DynamicResource HeaderBgBrush}"
+                                     CornerRadius="6"
+                                     BorderBrush="{DynamicResource BorderSubtleBrush}"
+                                     Foreground="{DynamicResource TextDarkBrush}"/>
+
+                            <Button Content="Search"
+                                    Background="{DynamicResource PrimaryBrush}"
+                                    Foreground="White"
+                                    CornerRadius="0"
+                                    Padding="12,6"
+                                    FontWeight="SemiBold"
+                                    Click="OnPlayerSearchClicked"/>
                         </StackPanel>
                     </Grid>
                 </Border>
@@ -42,7 +49,6 @@
                 <!-- Leaderboard Table Container -->
                 <Border Background="{DynamicResource CardBgBrush}" CornerRadius="10" Padding="16">
                     <StackPanel Spacing="10">
-                        <!-- Table Header -->
                         <Grid ColumnDefinitions="60, *, 120, 100, 160" Margin="8,0,8,6">
                             <TextBlock Grid.Column="0" Text="RANK" FontSize="11" FontWeight="Bold" Foreground="{DynamicResource TextMutedBrush}"/>
                             <TextBlock Grid.Column="1" Text="PLAYER NAME" FontSize="11" FontWeight="Bold" Foreground="{DynamicResource TextMutedBrush}"/>
@@ -53,12 +59,10 @@
 
                         <Separator Background="{DynamicResource BorderSubtleBrush}" Height="1"/>
 
-                        <!-- Data Rows List -->
                         <StackPanel x:Name="LeaderboardRowsContainer" Spacing="6"/>
 
-                        <!-- Empty State Message -->
                         <TextBlock x:Name="EmptyStateText"
-                                   Text="No game records found in SQLite database yet."
+                                   Text="No game records found yet."
                                    Foreground="{DynamicResource TextMutedBrush}"
                                    FontStyle="Italic"
                                    HorizontalAlignment="Center"

@@ -6,7 +6,6 @@
              x:Class="Yahtzee.UI.Controls.DiceControl">
 
     <Grid RowDefinitions="Auto, *">
-        <!-- Held Status Badge -->
         <Border Grid.Row="0"
                 x:Name="HeldBadge"
                 HorizontalAlignment="Center"
@@ -21,7 +20,6 @@
                        FontWeight="Bold"/>
         </Border>
 
-        <!-- Die Body Card -->
         <Border Grid.Row="1"
                 x:Name="DieCard"
                 Width="90"
@@ -41,29 +39,16 @@
             </Border.Transitions>
 
             <Grid Margin="12">
-                <!-- Die Pips (Dots) Grid (3x3) -->
-                <!-- Grid Positions:
-                     (0,0) (0,1) (0,2)
-                     (1,0) (1,1) (1,2)
-                     (2,0) (2,1) (2,2) -->
                 <Grid RowDefinitions="*,*,*" ColumnDefinitions="*,*,*">
-                    <!-- Top-Left -->
                     <Ellipse Grid.Row="0" Grid.Column="0" x:Name="Pip00" Width="14" Height="14" Fill="#0A0C10" IsVisible="False"/>
-                    <!-- Top-Right -->
                     <Ellipse Grid.Row="0" Grid.Column="2" x:Name="Pip02" Width="14" Height="14" Fill="#0A0C10" IsVisible="False"/>
-                    <!-- Middle-Left -->
                     <Ellipse Grid.Row="1" Grid.Column="0" x:Name="Pip10" Width="14" Height="14" Fill="#0A0C10" IsVisible="False"/>
-                    <!-- Center -->
                     <Ellipse Grid.Row="1" Grid.Column="1" x:Name="Pip11" Width="14" Height="14" Fill="#0A0C10" IsVisible="False"/>
-                    <!-- Middle-Right -->
                     <Ellipse Grid.Row="1" Grid.Column="2" x:Name="Pip12" Width="14" Height="14" Fill="#0A0C10" IsVisible="False"/>
-                    <!-- Bottom-Left -->
                     <Ellipse Grid.Row="2" Grid.Column="0" x:Name="Pip20" Width="14" Height="14" Fill="#0A0C10" IsVisible="False"/>
-                    <!-- Bottom-Right -->
                     <Ellipse Grid.Row="2" Grid.Column="2" x:Name="Pip22" Width="14" Height="14" Fill="#0A0C10" IsVisible="False"/>
                 </Grid>
 
-                <!-- Value Fallback Number Overlay -->
                 <TextBlock x:Name="ValueText"
                            Text="1"
                            FontSize="36"

@@ -151,10 +151,10 @@ public partial class GameView : UserControl
 
             var border = new Border
             {
-                Background = isCurrent ? Brush.Parse("#0B382A") : Brush.Parse("#12151F"),
-                BorderBrush = isCurrent ? Brush.Parse("#D4AF37") : Brush.Parse("#252B36"),
+                Background = isCurrent ? Brush.Parse("#059669") : Brush.Parse("#0D261E"),
+                BorderBrush = isCurrent ? Brush.Parse("#D4AF37") : Brush.Parse("#253628"),
                 BorderThickness = new Avalonia.Thickness(isCurrent ? 1.5 : 1),
-                CornerRadius = new Avalonia.CornerRadius(8),
+                CornerRadius = new Avalonia.CornerRadius(16),
                 Padding = new Avalonia.Thickness(12, 6)
             };
 
@@ -201,8 +201,8 @@ public partial class GameView : UserControl
 
             var scorePill = new Border
             {
-                Background = isCurrent ? Brush.Parse("#24200A") : Brush.Parse("#0B0E14"),
-                CornerRadius = new Avalonia.CornerRadius(4),
+                Background = isCurrent ? Brush.Parse("#451A03") : Brush.Parse("#0B140D"),
+                CornerRadius = new Avalonia.CornerRadius(2),
                 Padding = new Avalonia.Thickness(6, 2),
                 VerticalAlignment = VerticalAlignment.Center
             };
@@ -237,26 +237,25 @@ public partial class GameView : UserControl
 
         var upperHeader = new Border
         {
-            Background = Brush.Parse("#0D201A"),
+            Background = Brush.Parse("#064E3B"),
             BorderBrush = Brush.Parse("#10B981"),
             BorderThickness = new Avalonia.Thickness(1),
-            CornerRadius = new Avalonia.CornerRadius(8),
+            CornerRadius = new Avalonia.CornerRadius(0),
             Padding = new Avalonia.Thickness(12, 8),
-            Margin = new Avalonia.Thickness(0, 2, 0, 4)
+            Margin = new Avalonia.Thickness(0, 4, 0, 2)
         };
         var upperGrid = new Grid { ColumnDefinitions = new ColumnDefinitions("*, Auto") };
 
         var upperTitleStack = new StackPanel { Orientation = Orientation.Horizontal, Spacing = 8, VerticalAlignment = VerticalAlignment.Center };
-        upperTitleStack.Children.Add(new TextBlock { Text = "🎯", FontSize = 14, VerticalAlignment = VerticalAlignment.Center });
-        upperTitleStack.Children.Add(new TextBlock { Text = "UPPER SECTION • NUMBERS (1 to 6)", FontWeight = FontWeight.Black, Foreground = Brush.Parse("#34D399"), FontSize = 12, VerticalAlignment = VerticalAlignment.Center });
+        upperTitleStack.Children.Add(new TextBlock { Text = "UPPER SECTION • NUMBERS (1 to 6)", FontWeight = FontWeight.Bold, Foreground = Brush.Parse("#34D399"), FontSize = 11.5, VerticalAlignment = VerticalAlignment.Center });
         Grid.SetColumn(upperTitleStack, 0);
 
         var upperBonusInfo = new TextBlock
         {
-            Text = hasBonus ? "+35 PTS BONUS UNLOCKED!" : $"+35 Pts bonus target: {neededForBonus} pts needed",
-            FontSize = 11,
-            FontWeight = FontWeight.Bold,
-            Foreground = hasBonus ? Brush.Parse("#FFD700") : Brush.Parse("#A1A5B0"),
+            Text = hasBonus ? "+35 PTS BONUS UNLOCKED" : $"+35 Pts bonus target: {neededForBonus} pts needed",
+            FontSize = 10.5,
+            FontWeight = FontWeight.SemiBold,
+            Foreground = hasBonus ? Brush.Parse("#FBBF24") : Brush.Parse("#A7CEC0"),
             VerticalAlignment = VerticalAlignment.Center
         };
         Grid.SetColumn(upperBonusInfo, 1);
@@ -273,26 +272,25 @@ public partial class GameView : UserControl
 
         var lowerHeader = new Border
         {
-            Background = Brush.Parse("#231018"),
+            Background = Brush.Parse("#3F0E18"),
             BorderBrush = Brush.Parse("#BE123C"),
             BorderThickness = new Avalonia.Thickness(1),
-            CornerRadius = new Avalonia.CornerRadius(8),
+            CornerRadius = new Avalonia.CornerRadius(0),
             Padding = new Avalonia.Thickness(12, 8),
-            Margin = new Avalonia.Thickness(0, 10, 0, 4)
+            Margin = new Avalonia.Thickness(0, 12, 0, 2)
         };
         var lowerGrid = new Grid { ColumnDefinitions = new ColumnDefinitions("*, Auto") };
 
         var lowerTitleStack = new StackPanel { Orientation = Orientation.Horizontal, Spacing = 8, VerticalAlignment = VerticalAlignment.Center };
-        lowerTitleStack.Children.Add(new TextBlock { Text = "🃏", FontSize = 14, VerticalAlignment = VerticalAlignment.Center });
-        lowerTitleStack.Children.Add(new TextBlock { Text = "LOWER SECTION • CASINO COMBINATIONS", FontWeight = FontWeight.Black, Foreground = Brush.Parse("#FB7185"), FontSize = 12, VerticalAlignment = VerticalAlignment.Center });
+        lowerTitleStack.Children.Add(new TextBlock { Text = "LOWER SECTION • CASINO COMBINATIONS", FontWeight = FontWeight.Bold, Foreground = Brush.Parse("#FDA4AF"), FontSize = 11.5, VerticalAlignment = VerticalAlignment.Center });
         Grid.SetColumn(lowerTitleStack, 0);
 
         var lowerInfo = new TextBlock
         {
             Text = "Poker & VIP Figures",
-            FontSize = 11,
+            FontSize = 10.5,
             FontWeight = FontWeight.SemiBold,
-            Foreground = Brush.Parse("#A1A5B0"),
+            Foreground = Brush.Parse("#E2E8F0"),
             VerticalAlignment = VerticalAlignment.Center
         };
         Grid.SetColumn(lowerInfo, 1);
@@ -322,9 +320,10 @@ public partial class GameView : UserControl
 
         var border = new Border
         {
-            CornerRadius = new Avalonia.CornerRadius(8),
-            Padding = new Avalonia.Thickness(10, 7),
-            Margin = new Avalonia.Thickness(0, 2)
+            CornerRadius = new Avalonia.CornerRadius(0),
+            Padding = new Avalonia.Thickness(12, 8),
+            Margin = new Avalonia.Thickness(0, 1),
+            BorderThickness = new Avalonia.Thickness(1)
         };
 
         var rowGrid = new Grid
@@ -336,22 +335,19 @@ public partial class GameView : UserControl
         {
             if (filledScore > 0)
             {
-                border.Background = Brush.Parse("#0E261D");
-                border.BorderBrush = Brush.Parse("#66D4AF37");
-                border.BorderThickness = new Avalonia.Thickness(1.5);
+                border.Background = Brush.Parse("#ECFDF5");
+                border.BorderBrush = Brush.Parse("#10B981");
             }
             else
             {
-                border.Background = Brush.Parse("#1E1116");
-                border.BorderBrush = Brush.Parse("#66BE123C");
-                border.BorderThickness = new Avalonia.Thickness(1);
+                border.Background = Brush.Parse("#FFF1F2");
+                border.BorderBrush = Brush.Parse("#BE123C");
             }
         }
         else if (hasRolled)
         {
-            border.Background = Brush.Parse("#10B981");
-            border.BorderBrush = previewScore > 0 ? Brush.Parse("#D4AF37") : Brush.Parse("#982E2E");
-            border.BorderThickness = new Avalonia.Thickness(1);
+            border.Background = Brush.Parse("#FFFFFF");
+            border.BorderBrush = previewScore > 0 ? Brush.Parse("#F59E0B") : Brush.Parse("#E8E4DC");
             border.Cursor = isAiTurn ? new Avalonia.Input.Cursor(Avalonia.Input.StandardCursorType.Arrow) : new Avalonia.Input.Cursor(Avalonia.Input.StandardCursorType.Hand);
 
             if (!isAiTurn)
@@ -362,26 +358,27 @@ public partial class GameView : UserControl
         }
         else
         {
-            border.Background = Brush.Parse("#10B981");
-            border.BorderBrush = Brush.Parse("#1B5643");
-            border.BorderThickness = new Avalonia.Thickness(1);
+            border.Background = Brush.Parse("#FFFFFF");
+            border.BorderBrush = Brush.Parse("#E8E4DC");
         }
 
         var leftStack = new StackPanel { Orientation = Orientation.Horizontal, Spacing = 10, VerticalAlignment = VerticalAlignment.Center };
 
         var iconBorder = new Border
         {
-            Background = Brush.Parse(details.BadgeBgHex),
-            CornerRadius = new Avalonia.CornerRadius(6),
-            Width = 28,
-            Height = 28,
-            VerticalAlignment = VerticalAlignment.Center
+            Background = Brush.Parse("#F6EFE0"),
+            CornerRadius = new Avalonia.CornerRadius(0),
+            Width = 24,
+            Height = 24,
+            VerticalAlignment = VerticalAlignment.Center,
+            BorderBrush = Brush.Parse("#A7CEC0"),
+            BorderThickness = new Avalonia.Thickness(1)
         };
         var iconText = new TextBlock
         {
             Text = details.Icon,
-            FontSize = 14,
-            Foreground = Brushes.White,
+            FontSize = 12,
+            Foreground = Brush.Parse("#2F5C4D"),
             HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Center,
             VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center
         };
@@ -392,9 +389,9 @@ public partial class GameView : UserControl
         var titleText = new TextBlock
         {
             Text = details.Title,
-            FontWeight = isFilled ? FontWeight.Bold : FontWeight.SemiBold,
-            FontSize = 13,
-            Foreground = isFilled ? (filledScore > 0 ? Brush.Parse("#F8FAFC") : Brush.Parse("#A1A5B0")) : Brushes.White
+            FontWeight = isFilled ? FontWeight.Bold : FontWeight.Normal,
+            FontSize = 12.5,
+            Foreground = isFilled ? (filledScore > 0 ? Brush.Parse("#0C150C") : Brush.Parse("#2F5C4D")) : Brush.Parse("#0C150C")
         };
         titleStack.Children.Add(titleText);
 
@@ -404,9 +401,9 @@ public partial class GameView : UserControl
         var descText = new TextBlock
         {
             Text = details.Description,
-            FontSize = 10.5,
-            Foreground = isFilled ? Brush.Parse("#F1FFE2") : Brush.Parse("#033018"),
-            Margin = new Avalonia.Thickness(10, 0, 0, 0),
+            FontSize = 10,
+            Foreground = Brush.Parse("#2F5C4D"),
+            Margin = new Avalonia.Thickness(12, 0, 0, 0),
             VerticalAlignment = VerticalAlignment.Center
         };
         Grid.SetColumn(descText, 1);
@@ -415,37 +412,37 @@ public partial class GameView : UserControl
         {
             var scoreChip = new Border
             {
-                CornerRadius = new Avalonia.CornerRadius(6),
-                Padding = new Avalonia.Thickness(12, 4),
+                CornerRadius = new Avalonia.CornerRadius(0),
+                Padding = new Avalonia.Thickness(10, 4),
                 Margin = new Avalonia.Thickness(8, 0, 0, 0),
                 VerticalAlignment = VerticalAlignment.Center
             };
 
             if (filledScore > 0)
             {
-                scoreChip.Background = Brush.Parse("#26200A");
-                scoreChip.BorderBrush = Brush.Parse("#D4AF37");
+                scoreChip.Background = Brush.Parse("#064E3B");
+                scoreChip.BorderBrush = Brush.Parse("#34D399");
                 scoreChip.BorderThickness = new Avalonia.Thickness(1);
                 var t = new TextBlock
                 {
-                    Text = $"✓ {filledScore} PTS",
-                    FontSize = 12.5,
-                    FontWeight = FontWeight.Black,
-                    Foreground = Brush.Parse("#FFD700")
+                    Text = $"{filledScore} PTS",
+                    FontSize = 11.5,
+                    FontWeight = FontWeight.Bold,
+                    Foreground = Brush.Parse("#34D399")
                 };
                 scoreChip.Child = t;
             }
             else
             {
-                scoreChip.Background = Brush.Parse("#2B1218");
-                scoreChip.BorderBrush = Brush.Parse("#80BE123C");
+                scoreChip.Background = Brush.Parse("#3F0E18");
+                scoreChip.BorderBrush = Brush.Parse("#BE123C");
                 scoreChip.BorderThickness = new Avalonia.Thickness(1);
                 var t = new TextBlock
                 {
-                    Text = "✕ 0 PT",
+                    Text = "0 PT",
                     FontSize = 11,
                     FontWeight = FontWeight.Bold,
-                    Foreground = Brush.Parse("#FB7185")
+                    Foreground = Brush.Parse("#FDA4AF")
                 };
                 scoreChip.Child = t;
             }
@@ -458,37 +455,37 @@ public partial class GameView : UserControl
         {
             var previewChip = new Border
             {
-                CornerRadius = new Avalonia.CornerRadius(5),
-                Padding = new Avalonia.Thickness(8, 3),
-                Margin = new Avalonia.Thickness(8, 0, 6, 0),
+                CornerRadius = new Avalonia.CornerRadius(0),
+                Padding = new Avalonia.Thickness(8, 4),
+                Margin = new Avalonia.Thickness(8, 0, 4, 0),
                 VerticalAlignment = VerticalAlignment.Center
             };
 
             if (previewScore > 0)
             {
-                previewChip.Background = Brush.Parse("#382606");
+                previewChip.Background = Brush.Parse("#451A03");
                 previewChip.BorderBrush = Brush.Parse("#F59E0B");
                 previewChip.BorderThickness = new Avalonia.Thickness(1);
                 var pText = new TextBlock
                 {
                     Text = $"+{previewScore} PTS",
-                    FontSize = 12,
-                    FontWeight = FontWeight.Black,
+                    FontSize = 11,
+                    FontWeight = FontWeight.Bold,
                     Foreground = Brush.Parse("#FBBF24")
                 };
                 previewChip.Child = pText;
             }
             else
             {
-                previewChip.Background = Brush.Parse("#2B1218");
-                previewChip.BorderBrush = Brush.Parse("#9F1239");
+                previewChip.Background = Brush.Parse("#E8E4DC");
+                previewChip.BorderBrush = Brush.Parse("#A7CEC0");
                 previewChip.BorderThickness = new Avalonia.Thickness(1);
                 var pText = new TextBlock
                 {
                     Text = "0 PT",
-                    FontSize = 10,
-                    FontWeight = FontWeight.Bold,
-                    Foreground = Brush.Parse("#FDA4AF")
+                    FontSize = 10.5,
+                    FontWeight = FontWeight.Normal,
+                    Foreground = Brush.Parse("#2F5C4D")
                 };
                 previewChip.Child = pText;
             }
@@ -497,13 +494,13 @@ public partial class GameView : UserControl
 
             var selectBtn = new Button
             {
-                Content = "SCORE",
-                Background = previewScore > 0 ? Brush.Parse("#10B981") : Brush.Parse("#9F1239"),
+                Content = "SELECT",
+                Background = previewScore > 0 ? Brush.Parse("#10B981") : Brush.Parse("#2F5C4D"),
                 Foreground = Brushes.White,
-                Padding = new Avalonia.Thickness(12, 5),
-                CornerRadius = new Avalonia.CornerRadius(6),
-                FontWeight = FontWeight.Black,
-                FontSize = 11,
+                Padding = new Avalonia.Thickness(10, 4),
+                CornerRadius = new Avalonia.CornerRadius(0),
+                FontWeight = FontWeight.SemiBold,
+                FontSize = 10.5,
                 IsEnabled = !isAiTurn,
                 VerticalAlignment = VerticalAlignment.Center
             };
@@ -516,18 +513,20 @@ public partial class GameView : UserControl
         {
             var placeholderBorder = new Border
             {
-                Background = Brush.Parse("#08533A"),
-                CornerRadius = new Avalonia.CornerRadius(4),
-                Padding = new Avalonia.Thickness(10, 3),
+                Background = Brush.Parse("#FAF8F5"),
+                CornerRadius = new Avalonia.CornerRadius(0),
+                Padding = new Avalonia.Thickness(8, 4),
                 Margin = new Avalonia.Thickness(8, 0, 0, 0),
-                VerticalAlignment = VerticalAlignment.Center
+                VerticalAlignment = VerticalAlignment.Center,
+                BorderBrush = Brush.Parse("#E8E4DC"),
+                BorderThickness = new Avalonia.Thickness(1)
             };
             var placeholderText = new TextBlock
             {
-                Text = "--",
-                FontSize = 12,
-                FontWeight = FontWeight.Bold,
-                Foreground = Brush.Parse("#B0D2BF")
+                Text = "—",
+                FontSize = 11,
+                FontWeight = FontWeight.Normal,
+                Foreground = Brush.Parse("#A7CEC0")
             };
             placeholderBorder.Child = placeholderText;
             Grid.SetColumn(placeholderBorder, 2);
