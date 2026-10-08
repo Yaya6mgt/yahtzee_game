@@ -18,6 +18,10 @@ public class Die
         IsHeld = isHeld;
     }
 
+    /// <summary>
+    /// Rolls the die.
+    /// </summary>
+    /// <param name="randomProvider">The random number provider.</param>
     public void Roll(IRandomProvider randomProvider)
     {
         ArgumentNullException.ThrowIfNull(randomProvider);
@@ -28,6 +32,9 @@ public class Die
         }
     }
 
+    /// <summary>
+    /// Resets the die.
+    /// </summary>
     public void Reset()
     {
         IsHeld = false;

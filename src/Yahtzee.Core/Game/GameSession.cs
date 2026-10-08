@@ -42,6 +42,10 @@ public class GameSession
         DiceCup = new DiceCup(_randomProvider);
     }
 
+    /// <summary>
+    /// Rolls the dice.
+    /// </summary>
+    /// <returns>True if the dice were rolled successfully, false otherwise.</returns>
     public bool RollDice()
     {
         if (IsGameOver) return false;
@@ -54,6 +58,11 @@ public class GameSession
         return success;
     }
 
+    /// <summary>
+    /// Toggles the hold state of a specific die.
+    /// </summary>
+    /// <param name="dieIndex">The index of the die to toggle.</param>
+    /// <returns>True if the die was toggled successfully, false otherwise.</returns>
     public bool ToggleHold(int dieIndex)
     {
         if (IsGameOver) return false;
@@ -65,6 +74,11 @@ public class GameSession
         return success;
     }
 
+    /// <summary>
+    /// Selects a category and records the score.
+    /// </summary>
+    /// <param name="category">The category to select.</param>
+    /// <returns>True if the category was selected successfully, false otherwise.</returns>
     public bool SelectCategory(ScoreCategory category)
     {
         if (IsGameOver) return false;
@@ -81,6 +95,10 @@ public class GameSession
         return true;
     }
 
+    /// <summary>
+    /// Executes the next step of the AI's turn.
+    /// </summary>
+    /// <param name="onStepCallback">An optional callback to be invoked after each step.</param>
     public async Task ExecuteAiTurnStepAsync(Action? onStepCallback = null)
     {
         if (IsGameOver || !CurrentPlayer.IsAi) return;
@@ -111,6 +129,9 @@ public class GameSession
         await Task.CompletedTask;
     }
 
+    /// <summary>
+    /// Advances the turn to the next player.
+    /// </summary>
     private void AdvanceTurn()
     {
         DiceCup.ResetForNewRound();
@@ -133,11 +154,18 @@ public class GameSession
         }
     }
 
+    /// <summary>
+    /// Gets the players ranked by score in descending order.
+    /// </summary>
+    /// <returns>A list of players sorted by score.</returns>
     public List<Player> GetRankedPlayers()
     {
         return _players.OrderByDescending(p => p.Scorecard.TotalScore).ToList();
     }
 
+    /// <summary>
+    /// Records the game as completed in the database.
+    /// </summary>
     private async Task RecordGameOverAsync()
     {
         if (_database == null) return;
@@ -145,6 +173,10 @@ public class GameSession
         await _database.RecordCompletedGameAsync(DateTime.UtcNow, scores);
     }
 
+    /// <summary>
+    /// Converts the game session to save data.
+    /// </summary>
+    /// <returns>The game save data.</returns>
     public GameSaveData ToSaveData()
     {
         return new GameSaveData
@@ -165,6 +197,13 @@ public class GameSession
         };
     }
 
+    /// <summary>
+    /// Restores a game session from save data.
+    /// </summary>
+    /// <param name="saveData">The save data to restore from.</param>
+    /// <param name="database">The database repository.</param>
+    /// <param name="randomProvider">The random number provider.</param>
+    /// <returns>The restored game session.</returns>
     public static GameSession RestoreFromSaveData(GameSaveData saveData, IGameDatabaseRepository? database = null, IRandomProvider? randomProvider = null)
     {
         ArgumentNullException.ThrowIfNull(saveData);
@@ -202,6 +241,9 @@ public class GameSession
         return session;
     }
 
+    /// <summary>
+    /// A random number provider that returns a fixed value.
+    /// </summary>
     private class FixedValueRandomProvider : IRandomProvider
     {
         private readonly int _val;

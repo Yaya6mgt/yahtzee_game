@@ -36,6 +36,10 @@ public class DiceCup
         RollsRemaining = rollsRemaining;
     }
 
+    /// <summary>
+    /// Rolls the dice.
+    /// </summary>
+    /// <returns>True if the dice were rolled successfully, false otherwise.</returns>
     public bool Roll()
     {
         if (!CanRoll) return false;
@@ -49,6 +53,11 @@ public class DiceCup
         return true;
     }
 
+    /// <summary>
+    /// Toggles the hold state of a specific die.
+    /// </summary>
+    /// <param name="index">The index of the die to toggle.</param>
+    /// <returns>True if the die was toggled successfully, false otherwise.</returns>
     public bool ToggleHold(int index)
     {
         if (index < 0 || index >= DiceCount)
@@ -60,6 +69,12 @@ public class DiceCup
         return true;
     }
 
+    /// <summary>
+    /// Sets the hold state of a specific die.
+    /// </summary>
+    /// <param name="index">The index of the die to set.</param>
+    /// <param name="isHeld">The hold state to set.</param>
+    /// <returns>True if the die was set successfully, false otherwise.</returns>
     public bool SetHold(int index, bool isHeld)
     {
         if (index < 0 || index >= DiceCount)
@@ -71,8 +86,15 @@ public class DiceCup
         return true;
     }
 
+    /// <summary>
+    /// Gets the values of all dice.
+    /// </summary>
+    /// <returns>An array of die values.</returns>
     public int[] GetValues() => _dice.Select(d => d.Value).ToArray();
 
+    /// <summary>
+    /// Resets the dice for a new round.
+    /// </summary>
     public void ResetForNewRound()
     {
         foreach (var die in _dice)

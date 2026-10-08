@@ -1,5 +1,8 @@
 namespace Yahtzee.Core.Database;
 
+/// <summary>
+/// Represents a high score record.
+/// </summary>
 public record HighScoreRecord(
     string PlayerName,
     int Score,
@@ -8,6 +11,9 @@ public record HighScoreRecord(
     string GameId
 );
 
+/// <summary>
+/// Represents a completed game record.
+/// </summary>
 public record CompletedGameRecord(
     string GameId,
     DateTime PlayedAt,

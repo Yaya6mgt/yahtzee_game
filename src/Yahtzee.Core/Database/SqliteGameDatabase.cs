@@ -15,6 +15,10 @@ public class SqliteGameDatabase : IGameDatabaseRepository
 {
     private readonly string _connectionString;
 
+    /// <summary>
+    /// Creates a new instance of the SqliteGameDatabase class.
+    /// </summary>
+    /// <param name="dbPath">The path to the database file.</param>
     public SqliteGameDatabase(string dbPath = "yahtzee_games.db")
     {
         var builder = new SqliteConnectionStringBuilder
@@ -25,6 +29,9 @@ public class SqliteGameDatabase : IGameDatabaseRepository
         _connectionString = builder.ConnectionString;
     }
 
+    /// <summary>
+    /// Initializes the database by creating the necessary tables if they don't already exist.
+    /// </summary>
     public async Task InitializeDatabaseAsync()
     {
         using var connection = new SqliteConnection(_connectionString);
@@ -58,6 +65,11 @@ public class SqliteGameDatabase : IGameDatabaseRepository
         await command.ExecuteNonQueryAsync();
     }
 
+    /// <summary>
+    /// Records a completed game with all player scores.
+    /// </summary>
+    /// <param name="playedAt">The date and time when the game was played.</param>
+    /// <param name="playerScores">An enumerable collection of tuples containing the player's name, score, and whether they are an AI.</param>
     public async Task RecordCompletedGameAsync(DateTime playedAt, IEnumerable<(string name, int score, bool isAi)> playerScores)
     {
         var list = playerScores.ToList();
@@ -110,6 +122,10 @@ public class SqliteGameDatabase : IGameDatabaseRepository
         await transaction.CommitAsync();
     }
 
+    /// <summary>
+    /// Gets the top 5 high scores overall.
+    /// </summary>
+    /// <returns>A list of high score records, sorted by score in descending order.</returns>
     public async Task<List<HighScoreRecord>> GetTop5HighScoresOverallAsync()
     {
         using var connection = new SqliteConnection(_connectionString);
@@ -141,6 +157,11 @@ public class SqliteGameDatabase : IGameDatabaseRepository
         return records;
     }
 
+    /// <summary>
+    /// Gets the top 5 high scores for a specific player.
+    /// </summary>
+    /// <param name="playerName">The name of the player.</param>
+    /// <returns>A list of high score records for the specified player, sorted by score in descending order.</returns>
     public async Task<List<HighScoreRecord>> GetTop5HighScoresForPlayerAsync(string playerName)
     {
         using var connection = new SqliteConnection(_connectionString);
@@ -174,6 +195,11 @@ public class SqliteGameDatabase : IGameDatabaseRepository
         return records;
     }
 
+    /// <summary>
+    /// Gets the most recent completed games.
+    /// </summary>
+    /// <param name="limit">The maximum number of games to return.</param>
+    /// <returns>A list of completed game records, sorted by date in descending order.</returns>
     public async Task<List<CompletedGameRecord>> GetRecentGamesAsync(int limit = 20)
     {
         using var connection = new SqliteConnection(_connectionString);

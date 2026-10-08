@@ -18,6 +18,11 @@ public class JsonSaveRepository : IGameSaveRepository
         Converters = { new JsonStringEnumConverter() }
     };
 
+    /// <summary>
+    /// Saves the game to a file.
+    /// </summary>
+    /// <param name="saveData">The game data to save.</param>
+    /// <param name="filePath">The path to the file to save to.</param>
     public async Task SaveGameAsync(GameSaveData saveData, string filePath)
     {
         ArgumentNullException.ThrowIfNull(saveData);
@@ -33,6 +38,11 @@ public class JsonSaveRepository : IGameSaveRepository
         await JsonSerializer.SerializeAsync(stream, saveData, Options);
     }
 
+    /// <summary>
+    /// Loads the game from a file.
+    /// </summary>
+    /// <param name="filePath">The path to the file to load from.</param>
+    /// <returns>The game data.</returns>
     public async Task<GameSaveData> LoadGameAsync(string filePath)
     {
         if (!File.Exists(filePath))
@@ -43,6 +53,11 @@ public class JsonSaveRepository : IGameSaveRepository
         return data ?? throw new InvalidDataException("Failed to deserialize save game file.");
     }
 
+    /// <summary>
+    /// Lists all save files in a directory.
+    /// </summary>
+    /// <param name="directoryPath">The path to the directory to search for save files.</param>
+    /// <returns>An enumerable of save file paths.</returns>
     public IEnumerable<string> ListSaveFiles(string directoryPath)
     {
         if (!Directory.Exists(directoryPath))
