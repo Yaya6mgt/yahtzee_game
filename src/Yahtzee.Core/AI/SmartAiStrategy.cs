@@ -98,7 +98,17 @@ public class SmartAiStrategy : IAiStrategy
         if (openCategories.Contains(ScoreCategory.ThreeOfAKind) && previews[ScoreCategory.ThreeOfAKind] >= 18)
             return ScoreCategory.ThreeOfAKind;
 
-        foreach (var category in new[] { ScoreCategory.Sixes, ScoreCategory.Fives, ScoreCategory.Fours, ScoreCategory.Threes, ScoreCategory.Twos, ScoreCategory.Aces })
+        ScoreCategory[] categories = new ScoreCategory[]
+        {
+            ScoreCategory.Sixes,
+            ScoreCategory.Fives,
+            ScoreCategory.Fours,
+            ScoreCategory.Threes,
+            ScoreCategory.Twos,
+            ScoreCategory.Aces
+        };
+
+        foreach (var category in categories)
         {
             if (openCategories.Contains(category))
             {
@@ -114,13 +124,13 @@ public class SmartAiStrategy : IAiStrategy
         if (openCategories.Contains(ScoreCategory.Chance) && previews[ScoreCategory.Chance] >= 18)
             return ScoreCategory.Chance;
 
-        foreach (var category in new[] { ScoreCategory.Sixes, ScoreCategory.Fives, ScoreCategory.Fours, ScoreCategory.Threes, ScoreCategory.Twos, ScoreCategory.Aces })
+        foreach (var category in categories)
         {
             if (openCategories.Contains(category) && previews[category] > 0)
                 return category;
         }
 
-        var sacrificePriority = new[]
+        ScoreCategory[] sacrificePriority = new ScoreCategory[]
         {
             ScoreCategory.Aces,
             ScoreCategory.Twos,
@@ -142,6 +152,11 @@ public class SmartAiStrategy : IAiStrategy
         return openCategories.First();
     }
 
+    /// <summary>
+    /// Finds the indices of the dice that form the longest straight sequence.
+    /// </summary>
+    /// <param name="uniqueDice">The unique dice values and their indices.</param>
+    /// <returns>The indices of the dice that form the longest straight sequence.</returns>
     private static HashSet<int> FindStraightSequenceIndices(List<(int val, int idx)> uniqueDice)
     {
         var result = new HashSet<int>();
