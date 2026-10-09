@@ -2,10 +2,15 @@ using Yahtzee.Core.Scoring;
 
 namespace Yahtzee.Core.AI;
 
+/// <summary>
+/// Implements an advanced tactical AI strategy evaluating probabilities and scoring combinations for Yahtzee.
+/// </summary>
 public class SmartAiStrategy : IAiStrategy
 {
+    /// <inheritdoc />
     public string Name => "Smart AI";
 
+    /// <inheritdoc />
     public ISet<int> ChooseDiceToHold(IReadOnlyList<int> diceValues, Scorecard scorecard, int rollsRemaining)
     {
         var holds = new HashSet<int>();
@@ -73,6 +78,7 @@ public class SmartAiStrategy : IAiStrategy
         return holds;
     }
 
+    /// <inheritdoc />
     public ScoreCategory ChooseCategoryToFill(IReadOnlyList<int> diceValues, Scorecard scorecard)
     {
         var previews = ScoreCalculator.PreviewAllScores(diceValues);

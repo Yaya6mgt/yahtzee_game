@@ -43,6 +43,9 @@ public class GameSaveData
     public List<PlayerSaveData> Players { get; set; } = new();
 }
 
+/// <summary>
+/// Data transfer object for saving a player's scorecard state and details.
+/// </summary>
 public class PlayerSaveData
 {
     /// <summary>

@@ -3,13 +3,36 @@ using System.Text.Json.Serialization;
 
 namespace Yahtzee.Core.Persistence;
 
+/// <summary>
+/// Repository interface for saving and loading game sessions.
+/// </summary>
 public interface IGameSaveRepository
 {
+    /// <summary>
+    /// Saves game state data to a specified file path.
+    /// </summary>
+    /// <param name="saveData">The game state DTO to save.</param>
+    /// <param name="filePath">Target destination file path.</param>
     Task SaveGameAsync(GameSaveData saveData, string filePath);
+
+    /// <summary>
+    /// Loads game state data from a specified file path.
+    /// </summary>
+    /// <param name="filePath">Source file path to load.</param>
+    /// <returns>Deserialized game save data DTO.</returns>
     Task<GameSaveData> LoadGameAsync(string filePath);
+
+    /// <summary>
+    /// Enumerates saved game files present in a specified directory.
+    /// </summary>
+    /// <param name="directoryPath">Directory path to scan.</param>
+    /// <returns>Collection of save file paths.</returns>
     IEnumerable<string> ListSaveFiles(string directoryPath);
 }
 
+/// <summary>
+/// JSON implementation of <see cref="IGameSaveRepository"/> using System.Text.Json.
+/// </summary>
 public class JsonSaveRepository : IGameSaveRepository
 {
     private static readonly JsonSerializerOptions Options = new()

@@ -2,10 +2,15 @@ using Yahtzee.Core.Scoring;
 
 namespace Yahtzee.Core.AI;
 
+/// <summary>
+/// Implements a simple heuristic-based AI strategy for Yahtzee.
+/// </summary>
 public class BasicAiStrategy : IAiStrategy
 {
+    /// <inheritdoc />
     public string Name => "Basic AI";
 
+    /// <inheritdoc />
     public ISet<int> ChooseDiceToHold(IReadOnlyList<int> diceValues, Scorecard scorecard, int rollsRemaining)
     {
         var holds = new HashSet<int>();
@@ -32,6 +37,7 @@ public class BasicAiStrategy : IAiStrategy
         return holds;
     }
 
+    /// <inheritdoc />
     public ScoreCategory ChooseCategoryToFill(IReadOnlyList<int> diceValues, Scorecard scorecard)
     {
         var previews = ScoreCalculator.PreviewAllScores(diceValues);

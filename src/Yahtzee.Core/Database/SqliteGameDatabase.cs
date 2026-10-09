@@ -2,15 +2,47 @@ using Microsoft.Data.Sqlite;
 
 namespace Yahtzee.Core.Database;
 
+/// <summary>
+/// Repository interface for saving and querying completed game records in a database.
+/// </summary>
 public interface IGameDatabaseRepository
 {
+    /// <summary>
+    /// Initializes the database tables and indexes.
+    /// </summary>
     Task InitializeDatabaseAsync();
+
+    /// <summary>
+    /// Records a completed game session with player scores.
+    /// </summary>
+    /// <param name="playedAt">The timestamp when the game was completed.</param>
+    /// <param name="playerScores">Collection of player names, scores, and AI status.</param>
     Task RecordCompletedGameAsync(DateTime playedAt, IEnumerable<(string name, int score, bool isAi)> playerScores);
+
+    /// <summary>
+    /// Retrieves the top 5 highest scores across all players.
+    /// </summary>
+    /// <returns>A list of top high score records.</returns>
     Task<List<HighScoreRecord>> GetTop5HighScoresOverallAsync();
+
+    /// <summary>
+    /// Retrieves the top 5 highest scores achieved by a specific player.
+    /// </summary>
+    /// <param name="playerName">The name of the player to filter by.</param>
+    /// <returns>A list of player high score records.</returns>
     Task<List<HighScoreRecord>> GetTop5HighScoresForPlayerAsync(string playerName);
+
+    /// <summary>
+    /// Retrieves recent completed game history records.
+    /// </summary>
+    /// <param name="limit">Maximum number of recent games to return.</param>
+    /// <returns>A list of recent game records.</returns>
     Task<List<CompletedGameRecord>> GetRecentGamesAsync(int limit = 20);
 }
 
+/// <summary>
+/// SQLite implementation of the game database repository using Microsoft.Data.Sqlite.
+/// </summary>
 public class SqliteGameDatabase : IGameDatabaseRepository
 {
     private readonly string _connectionString;

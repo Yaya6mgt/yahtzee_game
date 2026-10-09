@@ -2,8 +2,14 @@ using Yahtzee.Core.Scoring;
 
 namespace Yahtzee.Core.AI;
 
+/// <summary>
+/// Defines the strategy interface for AI-controlled players.
+/// </summary>
 public interface IAiStrategy
 {
+    /// <summary>
+    /// Gets the unique display name of the AI strategy.
+    /// </summary>
     string Name { get; }
 
     /// <summary>

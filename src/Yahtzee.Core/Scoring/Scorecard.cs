@@ -1,14 +1,30 @@
 namespace Yahtzee.Core.Scoring;
 
+/// <summary>
+/// Represents a Yahtzee scorecard tracking filled categories, subtotals, bonus points, and total scores.
+/// </summary>
 public class Scorecard
 {
+    /// <summary>
+    /// Threshold score required in the upper section to unlock the +35 point bonus (63).
+    /// </summary>
     public const int UpperSectionBonusThreshold = 63;
+
+    /// <summary>
+    /// Point value awarded when upper section subtotal reaches threshold (35).
+    /// </summary>
     public const int UpperSectionBonusValue = 35;
 
     private readonly Dictionary<ScoreCategory, int?> _scores;
 
+    /// <summary>
+    /// Gets the read-only dictionary mapping score categories to recorded points (or null if unfilled).
+    /// </summary>
     public IReadOnlyDictionary<ScoreCategory, int?> Scores => _scores;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Scorecard"/> class with all 13 categories set to unfilled (null).
+    /// </summary>
     public Scorecard()
     {
         _scores = new Dictionary<ScoreCategory, int?>();

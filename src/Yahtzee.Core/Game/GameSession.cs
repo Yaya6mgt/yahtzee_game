@@ -7,26 +7,71 @@ using Yahtzee.Core.Services;
 
 namespace Yahtzee.Core.Game;
 
+/// <summary>
+/// Controls the game loop, turn management, state evaluation, and scoring flow for a Yahtzee session.
+/// </summary>
 public class GameSession
 {
+    /// <summary>
+    /// Total number of rounds in a standard Yahtzee game (13).
+    /// </summary>
     public const int TotalRounds = 13;
 
     private readonly List<Player> _players;
     private readonly IGameDatabaseRepository? _database;
     private readonly IRandomProvider _randomProvider;
 
+    /// <summary>
+    /// Gets the list of active players in the game session.
+    /// </summary>
     public IReadOnlyList<Player> Players => _players;
+
+    /// <summary>
+    /// Gets the 0-based index of the player whose turn it currently is.
+    /// </summary>
     public int CurrentPlayerIndex { get; private set; } = 0;
+
+    /// <summary>
+    /// Gets the current round number (1 to 13).
+    /// </summary>
     public int CurrentRound { get; private set; } = 1;
+
+    /// <summary>
+    /// Gets the dice cup containing the 5 dice for the current session.
+    /// </summary>
     public DiceCup DiceCup { get; }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the game state has unsaved modifications.
+    /// </summary>
     public bool HasUnsavedChanges { get; set; }
 
+    /// <summary>
+    /// Gets the player whose turn it currently is.
+    /// </summary>
     public Player CurrentPlayer => _players[CurrentPlayerIndex];
+
+    /// <summary>
+    /// Gets a value indicating whether the game session has completed all 13 rounds for all players.
+    /// </summary>
     public bool IsGameOver => CurrentRound > TotalRounds || _players.All(p => p.Scorecard.IsComplete);
 
+    /// <summary>
+    /// Event raised when the current turn advances to another player.
+    /// </summary>
     public event EventHandler? TurnChanged;
+
+    /// <summary>
+    /// Event raised when the game session finishes all rounds.
+    /// </summary>
     public event EventHandler? GameOver;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="GameSession"/> class with the specified players and dependencies.
+    /// </summary>
+    /// <param name="players">The collection of players participating in the game.</param>
+    /// <param name="database">Optional database repository for saving final game statistics.</param>
+    /// <param name="randomProvider">Optional random number generator provider.</param>
     public GameSession(
         IEnumerable<Player> players,
         IGameDatabaseRepository? database = null,

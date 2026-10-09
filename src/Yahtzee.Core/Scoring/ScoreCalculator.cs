@@ -1,5 +1,8 @@
 namespace Yahtzee.Core.Scoring;
 
+/// <summary>
+/// Static utility providing pure functions to calculate and preview Yahtzee scores for all categories.
+/// </summary>
 public static class ScoreCalculator
 {
     /// <summary>

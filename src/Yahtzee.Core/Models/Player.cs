@@ -2,6 +2,9 @@ using Yahtzee.Core.Scoring;
 
 namespace Yahtzee.Core.Models;
 
+/// <summary>
+/// Abstract base class representing a participant in a Yahtzee game session.
+/// </summary>
 public abstract class Player
 {
     /// <summary>
@@ -24,6 +27,10 @@ public abstract class Player
     /// </summary>
     public abstract bool IsAi { get; }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Player"/> class.
+    /// </summary>
+    /// <param name="name">The name of the player.</param>
     protected Player(string name)
     {
         if (string.IsNullOrWhiteSpace(name))
@@ -39,6 +46,7 @@ public abstract class Player
 /// </summary>
 public class HumanPlayer : Player
 {
+    /// <inheritdoc />
     public override bool IsAi => false;
 
     /// <summary>
@@ -53,7 +61,12 @@ public class HumanPlayer : Player
 /// </summary>
 public class AiPlayer : Player
 {
+    /// <inheritdoc />
     public override bool IsAi => true;
+
+    /// <summary>
+    /// Gets the name of the AI decision strategy associated with this bot.
+    /// </summary>
     public string StrategyName { get; }
 
     /// <summary>
