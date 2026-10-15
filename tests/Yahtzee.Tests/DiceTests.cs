@@ -99,15 +99,14 @@ public class DiceTests
     [Fact]
     public void DiceCup_Roll_OnlyRollsUnheldDice()
     {
-        // First roll
         var fakeRandom = new TestRandomProvider([1, 1, 1, 1, 1, 6, 6, 6, 6, 6]);
         var cup = new DiceCup(fakeRandom);
-        cup.Roll(); // Dice are all 1
+        cup.Roll();
 
         cup.SetHold(0, true);
         cup.SetHold(1, true);
 
-        cup.Roll(); // Unheld dice (indices 2,3,4) get rolled to 6, held stay 1
+        cup.Roll();
 
         Assert.Equal([1, 1, 6, 6, 6], cup.GetValues());
     }

@@ -14,7 +14,6 @@ public class AiStrategyTests
 
         var holds = strategy.ChooseDiceToHold(dice, scorecard, 2);
 
-        // Indices 0, 1, 2 have value 4
         Assert.Equal(new HashSet<int> { 0, 1, 2 }, holds);
     }
 
@@ -27,7 +26,6 @@ public class AiStrategyTests
 
         var chosen = strategy.ChooseCategoryToFill(dice, scorecard);
 
-        // Yahtzee gives 50 points, which is highest
         Assert.Equal(ScoreCategory.Yahtzee, chosen);
     }
 
